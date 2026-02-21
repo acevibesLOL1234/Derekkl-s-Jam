@@ -81,7 +81,84 @@ body::after{
 .hud-to span{color:#ff6600;font-size:10px;font-family:'Bebas Neue',cursive;}
 #hud-msg{font-family:'Russo One',sans-serif;font-size:10px;color:#ff6600;letter-spacing:2px;margin-top:1px;min-height:13px;text-align:center;}
 canvas{display:block;}
-#ctrl-bar{width:880px;display:flex;justify-content:space-between;align-items:center;padding:3px 10px;background:rgba(0,0,0,.9);border-top:1px solid rgba(255,40,0,.08);}
+/* ── MOBILE CONTROLS ─────────────────────────────────────── */
+#mobile-controls{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  height:200px;
+  z-index:50;
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+#joystick-zone{
+  position:absolute;left:12px;bottom:12px;
+  width:150px;height:150px;
+  pointer-events:all;
+}
+#joystick-base{
+  position:absolute;inset:0;
+  border-radius:50%;
+  background:rgba(255,255,255,0.07);
+  border:2px solid rgba(255,100,0,0.35);
+}
+#joystick-knob{
+  position:absolute;
+  width:54px;height:54px;
+  background:radial-gradient(circle at 35% 35%,rgba(255,140,0,0.9),rgba(200,60,0,0.7));
+  border-radius:50%;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  border:2px solid rgba(255,180,0,0.6);
+  box-shadow:0 0 14px rgba(255,80,0,0.5);
+}
+#action-btns{
+  position:absolute;right:12px;bottom:12px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:8px;
+  pointer-events:all;
+}
+.mob-btn{
+  font-family:'Bebas Neue',cursive;
+  font-size:13px;letter-spacing:2px;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  width:72px;height:60px;
+  cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  user-select:none;
+  opacity:0.88;
+  box-shadow:0 3px 8px rgba(0,0,0,0.5);
+}
+.mob-btn .mob-icon{font-size:20px;line-height:1;}
+.mob-btn.shoot{ background:linear-gradient(160deg,#0066ff,#003db3); }
+.mob-btn.sprint{ background:linear-gradient(160deg,#ff8800,#bb4400); }
+.mob-btn.dunk{   background:linear-gradient(160deg,#cc0033,#7a0018); }
+.mob-btn.steal{  background:linear-gradient(160deg,#009955,#005530); }
+.mob-btn.def{    background:linear-gradient(160deg,#6600cc,#330066); }
+.mob-btn.jump{   background:linear-gradient(160deg,#ff6600,#aa2200); }
+.mob-btn:active{ opacity:0.6; transform:scale(0.93); }
+@media (max-width: 900px){
+  body{ overflow-x:hidden; }
+  #mobile-controls{ display:block; }
+  #ctrl-bar{ display:none; }
+  canvas{
+    width:100vw !important;
+    height:auto !important;
+  }
+  #game-wrap{
+    padding-bottom: 210px;
+  }
+  #menu{ padding-bottom:20px; }
+  .mcard{ width:96vw !important; }
+  #diff-bar{ gap:6px !important; }
+  .diff-btn{ min-width:80px !important; font-size:14px !important; padding:8px 10px !important; }
+}
 #ctrl-hint{font-size:9px;color:#2a2a2a;letter-spacing:.5px;}
 #ctrl-msg{font-family:'Russo One',sans-serif;font-size:9px;color:#ff5500;letter-spacing:1px;}
 #gameover{position:fixed;inset:0;background:rgba(0,0,0,.97);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:40;}
@@ -403,6 +480,36 @@ canvas{display:block;}
 <div id="ctrl-bar">
   <div id="ctrl-hint">WASD=MOVE · SHIFT=SPRINT · E=SHOOT/CHECK · Q=STEAL · SPACE=DUNK/BLOCK · F=D-STANCE</div>
   <div id="ctrl-msg"></div>
+</div>
+
+<!-- MOBILE CONTROLS -->
+<div id="mobile-controls">
+  <!-- Left: Joystick -->
+  <div id="joystick-zone">
+    <div id="joystick-base"></div>
+    <div id="joystick-knob"></div>
+  </div>
+  <!-- Right: Action buttons -->
+  <div id="action-btns">
+    <button class="mob-btn shoot" id="mb-shoot" ontouchstart="mbPress('KeyE')" ontouchend="mbRelease('KeyE')">
+      <span class="mob-icon">🏀</span>SHOOT
+    </button>
+    <button class="mob-btn dunk" id="mb-dunk" ontouchstart="mbPress('Space')" ontouchend="mbRelease('Space')">
+      <span class="mob-icon">💥</span>DUNK
+    </button>
+    <button class="mob-btn sprint" id="mb-sprint" ontouchstart="mbPress('ShiftLeft')" ontouchend="mbRelease('ShiftLeft')">
+      <span class="mob-icon">💨</span>SPRINT
+    </button>
+    <button class="mob-btn steal" id="mb-steal" ontouchstart="mbFresh('KeyQ')" ontouchend="">
+      <span class="mob-icon">✋</span>STEAL
+    </button>
+    <button class="mob-btn def" id="mb-def" ontouchstart="mbPress('KeyF')" ontouchend="mbRelease('KeyF')">
+      <span class="mob-icon">🛡️</span>D-STANCE
+    </button>
+    <button class="mob-btn jump" id="mb-jump" ontouchstart="mbFresh('Space')" ontouchend="">
+      <span class="mob-icon">⬆️</span>JUMP
+    </button>
+  </div>
 </div>
 
 <div id="turnover-flash"><div id="to-title"></div><div id="turnover-sub"></div></div>
@@ -854,6 +961,83 @@ window.addEventListener('keyup',e=>{ keys[e.code]=false; });
 function fresh(k){ if(keys[k]==='fresh'){keys[k]=true;return true;}return false; }
 function held(k){ return !!keys[k]; }
 function sprinting(){ return (held('ShiftLeft')||held('ShiftRight')); }
+
+// ── MOBILE CONTROLS ──────────────────────────────────────────────────────────
+function mbPress(k){ keys[k] = keys[k] || true; }
+function mbRelease(k){ keys[k] = false; }
+function mbFresh(k){ keys[k] = 'fresh'; }
+
+(function setupJoystick(){
+  const zone  = document.getElementById('joystick-zone');
+  const knob  = document.getElementById('joystick-knob');
+  if(!zone) return;
+
+  const RADIUS = 48;
+  let activeTouchId = null;
+  let baseX = 0, baseY = 0;
+
+  function getCenter(){
+    const r = zone.getBoundingClientRect();
+    return { x: r.left + r.width/2, y: r.top + r.height/2 };
+  }
+
+  function applyJoy(dx, dy){
+    const deadzone = 0.18;
+    const ax = Math.abs(dx), ay = Math.abs(dy);
+    keys['KeyA'] = dx < -deadzone;
+    keys['KeyD'] = dx >  deadzone;
+    keys['KeyW'] = dy < -deadzone;
+    keys['KeyS'] = dy >  deadzone;
+    // Auto-sprint when pushed far
+    const mag = Math.hypot(dx, dy);
+    if(mag > 0.75) keys['ShiftLeft'] = true;
+    else if(!mbSprintHeld) keys['ShiftLeft'] = false;
+  }
+
+  function clearJoy(){
+    keys['KeyA']=keys['KeyD']=keys['KeyW']=keys['KeyS']=false;
+    if(!mbSprintHeld) keys['ShiftLeft']=false;
+    knob.style.transform='translate(-50%,-50%)';
+  }
+
+  zone.addEventListener('touchstart', e=>{
+    e.preventDefault();
+    if(activeTouchId !== null) return;
+    const t = e.changedTouches[0];
+    activeTouchId = t.identifier;
+    const c = getCenter();
+    baseX = c.x; baseY = c.y;
+  }, {passive:false});
+
+  zone.addEventListener('touchmove', e=>{
+    e.preventDefault();
+    for(const t of e.changedTouches){
+      if(t.identifier !== activeTouchId) continue;
+      const rawDX = t.clientX - baseX;
+      const rawDY = t.clientY - baseY;
+      const mag   = Math.hypot(rawDX, rawDY);
+      const clamp = Math.min(mag, RADIUS);
+      const angle = Math.atan2(rawDY, rawDX);
+      const kx    = Math.cos(angle)*clamp;
+      const ky    = Math.sin(angle)*clamp;
+      knob.style.transform = `translate(calc(-50% + ${kx}px), calc(-50% + ${ky}px))`;
+      applyJoy(rawDX/RADIUS, rawDY/RADIUS);
+    }
+  }, {passive:false});
+
+  zone.addEventListener('touchend', e=>{
+    e.preventDefault();
+    for(const t of e.changedTouches){
+      if(t.identifier === activeTouchId){ activeTouchId=null; clearJoy(); }
+    }
+  }, {passive:false});
+
+  zone.addEventListener('touchcancel', e=>{ activeTouchId=null; clearJoy(); }, {passive:false});
+})();
+
+let mbSprintHeld = false;
+document.getElementById('mb-sprint')?.addEventListener('touchstart', ()=>{ mbSprintHeld=true; }, {passive:true});
+document.getElementById('mb-sprint')?.addEventListener('touchend',   ()=>{ mbSprintHeld=false; }, {passive:true});
 
 // ═══════════════════════════════════════════
 // HELPERS
