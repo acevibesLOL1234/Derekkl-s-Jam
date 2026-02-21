@@ -776,107 +776,152 @@ function updateTurnoverHUD(){ updateStatsBar(); }
 // ═══════════════════════════════════════════
 // CHECK-UP SYSTEM (only used after scores)
 // ═══════════════════════════════════════════
+// Checkup state
+let checkupPhase = 'idle'; // 'frozen' | 'throw' | 'live'
+let checkupFrozenTimer = 0;
+let checkupBallInFlight = false;
+
 function startCheckup(attackerTeam){
   possessionTeam = attackerTeam;
   checkupActive = true;
   checkupAccepted = false;
   checkupTimer = 0;
+  checkupPhase = 'frozen';
+  checkupFrozenTimer = 1.8; // freeze both players for 1.8s
+  checkupBallInFlight = false;
+
+  // Position players at their START spots — they don't teleport mid-game,
+  // these are just where they begin for the very first checkup
+  // For subsequent checkups, just freeze them where they are
 
   if(attackerTeam === 1){
-    player.hasBall = true; cpu.hasBall = false;
+    // Player has ball, CPU receives
+    // Move players near halfcourt if they're far from it (first possession only)
+    if(Math.abs(player.x - HALFCOURT_X) > 220){
+      player.x = HALFCOURT_X - 55; player.y = H/2;
+      cpu.x    = HALFCOURT_X + 80; cpu.y = H/2;
+    }
+    player.hasBall=false; cpu.hasBall=false;
     ball.inFlight=false; ball.loose=false; ball.trail=[];
-    player.x = HALFCOURT_X - 60; player.y = H/2;
-    cpu.x = HALFCOURT_X + 80; cpu.y = H/2;
-    checkupBallHolder = 1;
-    ball.x = player.x+14; ball.y = player.y+2;
+    ball.x=player.x; ball.y=player.y-8;
+    ball.vx=0; ball.vy=0;
+    checkupBallHolder = 1; // player will throw to cpu
     cpu.shootTimer = 3;
-    document.getElementById('checkup-ui').style.display='block';
-    document.getElementById('checkup-ui').textContent='E — CHECK BALL';
-    flash('CHECK BALL AT HALF COURT',3);
-    announce(`${playerName} CHECKING BALL...`);
+    showCkUI('PASS TO CPU — E TO CHECK 🏀', '#ff6600');
+    flash('FREEZE — CHECK THE BALL',2);
+    announce(`${playerName} HAS BALL — CHECKING IN`);
   } else {
-    player.hasBall = false; cpu.hasBall = true;
+    // CPU has ball, Player receives
+    if(Math.abs(cpu.x - HALFCOURT_X) > 220){
+      cpu.x    = HALFCOURT_X + 55; cpu.y = H/2;
+      player.x = HALFCOURT_X - 80; player.y = H/2;
+    }
+    player.hasBall=false; cpu.hasBall=false;
     ball.inFlight=false; ball.loose=false; ball.trail=[];
-    cpu.x = HALFCOURT_X + 60; cpu.y = H/2;
-    player.x = HALFCOURT_X - 80; player.y = H/2;
-    checkupBallHolder = 2;
-    ball.x = cpu.x-14; ball.y = cpu.y+2;
-    document.getElementById('checkup-ui').style.display='block';
-    document.getElementById('checkup-ui').textContent='WALK UP & PRESS E TO ACCEPT CHECK';
-    flash('WALK UP — PRESS E TO ACCEPT',3);
-    announce(`${cpuName} CHECKING BALL...`);
+    ball.x=cpu.x; ball.y=cpu.y-8;
+    ball.vx=0; ball.vy=0;
+    checkupBallHolder = 2; // cpu throws to player
+    showCkUI('CPU IS CHECKING BALL IN...', '#ff6600');
+    flash('FREEZE — WAIT FOR THE BALL',2);
+    announce(`${cpuName} CHECKING BALL IN`);
   }
 }
 
-function completeCheckup(){
-  checkupActive = false;
-  eWas = true;
-  document.getElementById('checkup-ui').style.display='none';
-  shotClock = 24;
+function showCkUI(msg, col){
+  const el=document.getElementById('checkup-ui');
+  el.style.display='block'; el.textContent=msg; el.style.borderColor=col||'#ff6600';
+}
+function hideCkUI(){ document.getElementById('checkup-ui').style.display='none'; }
 
-  if(possessionTeam === 1){
-    player.x = HALFCOURT_X + 20; player.y = H/2;
-    cpu.x = HALFCOURT_X + 120; cpu.y = H/2;
-    giveBall(player);
-    cpu.hasBall=false; player.hasBall=true;
-    ball.x=player.x+14; ball.y=player.y+2;
-    cpu.shootTimer=3;
-    flash("CHECK — LET'S RUN! 🏀",2);
-    announce('BALL IN — PLAY ON!');
+function throwCheckBall(){
+  // Ball flies as an arc from thrower to receiver
+  checkupBallInFlight = true;
+  ball.inFlight = false; ball.loose = false; // we'll manually animate it
+  ball.trail = [];
+
+  if(checkupBallHolder === 1){
+    // Player throws to CPU
+    ball._ckFrom = {x:player.x, y:player.y-8};
+    ball._ckTo   = {x:cpu.x,    y:cpu.y-8};
   } else {
-    cpu.x = HALFCOURT_X - 20; cpu.y = H/2;
-    player.x = HALFCOURT_X - 120; player.y = H/2;
-    giveBall(cpu);
-    cpu.hasBall=true; player.hasBall=false;
-    ball.x=cpu.x-14; ball.y=cpu.y+2;
-    cpu.shootTimer=2.8;
-    flash('CHECKED — ON DEFENSE! 🛡️',2);
-    announce('CPU HAS BALL — PLAY ON!');
+    // CPU throws to player
+    ball._ckFrom = {x:cpu.x,  y:cpu.y-8};
+    ball._ckTo   = {x:player.x, y:player.y-8};
   }
+  ball._ckT    = 0;
+  ball._ckDur  = Math.max(0.3, Math.hypot(ball._ckTo.x-ball._ckFrom.x, ball._ckTo.y-ball._ckFrom.y)/400);
+  ball.x = ball._ckFrom.x;
+  ball.y = ball._ckFrom.y;
+  showCkUI('BALL IN THE AIR... ✈️', '#ffcc00');
 }
 
 function updateCheckup(dt){
   if(!checkupActive) return;
   checkupTimer += dt;
 
-  let mx=0,my=0;
-  if(held('KeyW')||held('ArrowUp')) my=-1;
-  if(held('KeyS')||held('ArrowDown')) my=1;
-  if(held('KeyA')||held('ArrowLeft')) mx=-1;
-  if(held('KeyD')||held('ArrowRight')) mx=1;
-  if(mx||my){
-    const len=Math.hypot(mx,my)||1;
-    player.x=Math.max(22,Math.min(W-22,player.x+mx/len*P_SPEED*dt));
-    player.y=Math.max(COURT_TOP+8,Math.min(COURT_BOT-10,player.y+my/len*P_SPEED*dt));
-    player.walkT+=dt;
+  // ── PHASE 1: FROZEN — both players frozen, countdown before throw ──
+  if(checkupPhase === 'frozen'){
+    // Players can't move during freeze
+    checkupFrozenTimer -= dt;
+    const t = Math.ceil(checkupFrozenTimer);
+    showCkUI(
+      checkupBallHolder===1
+        ? `CHECKING IN — ${t}`
+        : `CPU CHECKING IN — ${t}`,
+      '#ff6600'
+    );
+    if(checkupFrozenTimer <= 0){
+      checkupPhase = 'throw';
+      throwCheckBall();
+    }
+    return; // no movement during freeze
   }
 
-  if(checkupBallHolder===1){
-    const cpuTarget={x:HALFCOURT_X+50,y:H/2};
-    const ddx=cpuTarget.x-cpu.x, ddy=cpuTarget.y-cpu.y;
-    const cpudd=Math.hypot(ddx,ddy)||1;
-    if(cpudd>8){ cpu.x+=ddx/cpudd*CPU_SPEED*0.7*dt; cpu.y+=ddy/cpudd*CPU_SPEED*0.7*dt; }
-    const el=document.getElementById('checkup-ui');
-    el.textContent='PRESS E — CHECK BALL 🏀'; el.style.borderColor='#ff6600';
-    const eNow=held('KeyE');
-    if(eNow&&!eWas) completeCheckup();
-    eWas=eNow;
-    if(checkupTimer>6) completeCheckup();
-  } else {
-    const pNear=Math.abs(player.x-HALFCOURT_X)<120;
-    const el=document.getElementById('checkup-ui');
-    if(pNear){
-      el.textContent='PRESS E TO ACCEPT CHECK ✋'; el.style.borderColor='#00e676';
-      const eNow=held('KeyE');
-      if(eNow&&!eWas) completeCheckup();
-      eWas=eNow;
-    } else {
-      el.textContent='WALK UP & PRESS E TO ACCEPT'; el.style.borderColor='#ff6600';
-      eWas=held('KeyE');
+  // ── PHASE 2: BALL IN FLIGHT ──────────────────────────────────────
+  if(checkupPhase === 'throw' && checkupBallInFlight){
+    ball._ckT += dt;
+    const prog = Math.min(1, ball._ckT / ball._ckDur);
+    // Arc path
+    ball.x = ball._ckFrom.x + (ball._ckTo.x - ball._ckFrom.x)*prog;
+    ball.y = ball._ckFrom.y + (ball._ckTo.y - ball._ckFrom.y)*prog
+           - Math.sin(Math.PI*prog)*36; // arc height
+    ball.spinAngle += 8*dt;
+
+    if(prog >= 1){
+      // Ball caught — game goes live
+      checkupBallInFlight = false;
+      checkupPhase = 'live';
+      checkupActive = false;
+      eWas = true;
+      hideCkUI();
+      shotClock = 24;
+
+      if(checkupBallHolder === 1){
+        // CPU caught the ball — CPU attacks, player defends
+        // CPU starts with ball where they are, no teleport
+        cpu.hasBall=true; player.hasBall=false;
+        ball.x=cpu.x-14; ball.y=cpu.y+2;
+        ball.inFlight=false; ball.loose=false;
+        cpu.shootTimer=2.8;
+        flash("BALL IN — PLAY DEFENSE! 🛡️",2);
+        announce('BALL IN — GAME ON!');
+      } else {
+        // Player caught the ball — player attacks
+        player.hasBall=true; cpu.hasBall=false;
+        ball.x=player.x+14; ball.y=player.y+2;
+        ball.inFlight=false; ball.loose=false;
+        cpu.shootTimer=3;
+        flash("GOT IT — LET'S RUN! 🏀",2);
+        announce('BALL IN — GAME ON!');
+      }
     }
-    if(checkupTimer>5) completeCheckup();
+    return; // no player movement while ball in air
   }
+
+  // ── PHASE 3: LIVE — shouldn't reach here since checkupActive=false ──
 }
+
+function completeCheckup(){ /* legacy — no longer called */ }
 
 // ═══════════════════════════════════════════
 // SCORING + RESET
@@ -1648,6 +1693,10 @@ function updateCPU(dt){
 // PLAYER INPUT
 // ═══════════════════════════════════════════
 function updatePlayer(dt){
+  // Frozen during checkup
+  if(checkupActive && (checkupPhase==='frozen' || checkupPhase==='throw')){
+    player.walkT=0; return;
+  }
   let mx=0,my=0;
   if(held('KeyW')||held('ArrowUp')) my=-1;
   if(held('KeyS')||held('ArrowDown')) my=1;
@@ -1715,28 +1764,39 @@ function updatePlayer(dt){
     const cpuClose = dist(player,cpu)<110;
 
     if(fresh('KeyZ')){
-      // HEZI (hesitation) — fake one way, burst the other
-      player.moveAnim=0.55; player.moveType='hezi'; player.moveCooldown=1.8;
+      // HEZI — stutter-step: freeze, fake left/right, burst opposite
+      const faceDir = player.vx>=0 ? 1 : -1; // which way player was moving
+      player.moveAnim=0.65; player.moveType='hezi'; player.moveCooldown=1.8;
+      player.heziDir=faceDir; player.heziPhase=0;
       sfxHezi();
       flash('HEZI! 🪄');
       announce(`${playerName} WITH THE HESITATION!`);
-      // Burst of speed in current direction
-      player.vx += (mx||1)*P_SPRINT*0.9;
-      player.vy += (my)*P_SPRINT*0.5;
+      // Short freeze then burst — handled via heziPhase timer in updatePlayer
+      player.vx=0; player.vy=0; // freeze for fake
+      // Schedule burst after fake window (0.18s)
+      setTimeout(()=>{
+        if(player.moveType==='hezi'){
+          player.heziPhase=1;
+          // Burst in current input direction or opposite of fake
+          const burstDir = (mx!==0) ? mx : -faceDir;
+          player.vx=burstDir*P_SPRINT*1.1;
+          player.vy=(my||0)*P_SPRINT*0.5;
+        }
+      }, 180);
       // If CPU is close and reaching, ankle break them
       if(cpuClose && cpu.stealAnim>0){
         cpu.anklebroken=1.8; cpu.stealCD=3.5;
         sfxAnkle();
         flash('ANKLE BROKEN! 🩹 HEZI GOT EM!');
         announce(`${cpuName} ON THE FLOOR — HEZI!`);
-        // CPU stumbles — kill their movement
         cpu.vx*=0.1; cpu.vy*=0.1;
       }
     }
 
     if(fresh('KeyX')){
-      // SPIN MOVE — 360 burst, harder to steal from
-      player.moveAnim=0.6; player.moveType='spin'; player.moveCooldown=2.0;
+      // SPIN MOVE — player turns away, burst
+      player.moveAnim=0.55; player.moveType='spin'; player.moveCooldown=2.0;
+      player.spinAngleDeg=0; // will increment each frame
       sfxSpin();
       flash('SPIN! 🔄');
       announce(`${playerName} WITH THE SPIN MOVE!`);
@@ -2091,14 +2151,29 @@ function drawChar(e, hasB){
   const ssc=Math.max(0.3,1+jo/80);
   const isSpr=isP?(sprinting()&&(Math.abs(player.vx)>8||Math.abs(player.vy)>8))
                   :(cpu.sprinting&&(Math.abs(cpu.vx)>8||Math.abs(cpu.vy)>8));
-  // Spin move rotation
+  // ── DRIBBLE MOVE ANIMATIONS ──────────────────────────────────────
+  // Spin: player turns sideways (scaleX shrinks to 0 then back) — like turning body
   const doSpin = isP && player.moveType==='spin' && player.moveAnim>0;
-  const spinRot = doSpin ? ((1-player.moveAnim/0.6)*Math.PI*2) : 0;
-  // Hezi lean
+  // Advance spin angle
+  if(doSpin) player.spinAngleDeg = Math.min(180, player.spinAngleDeg + 520*(1/60));
+  // scaleX: 1 → 0 (turning away) → back to 1 (facing forward again)
+  const spinProg = doSpin ? (player.spinAngleDeg/180) : 0;
+  const spinScaleX = doSpin ? Math.abs(Math.cos(spinProg*Math.PI)) : 1;
+
+  // Hezi: body rocks left then right — upper body lean only, legs stay
   const doHezi = isP && player.moveType==='hezi' && player.moveAnim>0;
-  const heziMx = player.vx>5?1:player.vx<-5?-1:1;
-  const heziX  = doHezi ? (1-player.moveAnim/0.55)*12*heziMx : 0;
-  if(doSpin||doHezi){ ctx.save(); ctx.translate(e.x+heziX,ey); if(doSpin) ctx.rotate(spinRot); ctx.translate(-(e.x+heziX),-ey); }
+  const heziProg = doHezi ? (1 - player.moveAnim/0.65) : 0; // 0→1 over animation
+  // Phase 0 (0-0.28): lean in fake direction, Phase 1 (0.28-1): snap opposite + burst
+  const heziPhase0 = heziProg < 0.28;
+  const fakeDir = player.heziDir || 1;
+  // Upper body offset: fake lean then snap back hard
+  const heziBodyX = doHezi
+    ? (heziPhase0
+        ? fakeDir * 10 * (heziProg/0.28)           // lean in fake direction
+        : -fakeDir * 8 * ((heziProg-0.28)/0.72))   // snap back
+    : 0;
+  // Head bob — quick dip down then up on burst
+  const heziHeadY = doHezi && !heziPhase0 ? -5*(1-((heziProg-0.28)/0.72)) : 0;
   ctx.fillStyle='rgba(0,0,0,.3)';
   ctx.beginPath();ctx.ellipse(e.x,e.y+20,11*ssc,3.5*ssc,0,0,Math.PI*2);ctx.fill();
   const t=e.walkT||0, shooting=isP&&meterActive&&!meterReleased;
@@ -2113,9 +2188,12 @@ function drawChar(e, hasB){
   ctx.fillStyle=isP?'#ddd':'#111';
   ctx.beginPath();ctx.ellipse(e.x-3+ls*.38-def,ey+23+crouchY,4.5,2.5,ls*.03,0,Math.PI*2);ctx.fill();
   ctx.beginPath();ctx.ellipse(e.x+3-ls*.38+def,ey+23+crouchY,4.5,2.5,-ls*.03,0,Math.PI*2);ctx.fill();
+  // Hezi: offset upper body (jersey+head) while legs stay
+  const bodyOffX = doHezi ? heziBodyX : 0;
   ctx.fillStyle=e.color;
   ctx.beginPath();
-  if(ctx.roundRect) ctx.roundRect(e.x-9,ey-10+crouchY,18,21,3); else ctx.rect(e.x-9,ey-10+crouchY,18,21);
+  const jerseyX = e.x + bodyOffX;
+  if(ctx.roundRect) ctx.roundRect(jerseyX-9,ey-10+crouchY,18,21,3); else ctx.rect(jerseyX-9,ey-10+crouchY,18,21);
   ctx.fill();
   if((isP&&p1OnFire)||((!isP)&&p2OnFire)){
     const useGold = isP && activeVFX.includes('vfx_golden_hour');
@@ -2132,7 +2210,10 @@ function drawChar(e, hasB){
   const nm2=isP?playerNum:cpuNum;
   ctx.fillStyle='rgba(255,255,255,.8)';
   ctx.font=`bold ${nm2.length>1?'6.5':'8.5'}px Barlow Condensed`;
-  ctx.textAlign='center';ctx.fillText('#'+nm2,e.x,ey+4+crouchY);
+  ctx.textAlign='center';ctx.fillText('#'+nm2,jerseyX||e.x,ey+4+crouchY);
+  // Head: hezi moves head with body + bob; spin stays upright (no turn)
+  const headX = e.x + bodyOffX;
+  const headY = ey-32 + (doHezi ? heziHeadY : 0);
   const skin=e.skinColor;
   ctx.strokeStyle=skin;ctx.lineWidth=3.8;ctx.lineCap='round';
   const blkR=(e.blockAnim>0)?e.blockAnim*52:0;
@@ -2184,8 +2265,7 @@ function drawChar(e, hasB){
   ctx.fillStyle=e.skinColor;ctx.beginPath();ctx.arc(e.x,ey-18,8.5,0,Math.PI*2);ctx.fill();
   ctx.strokeStyle=isP?'#ff6600':'#fff';ctx.lineWidth=1.8;
   ctx.beginPath();ctx.arc(e.x,ey-18,8.5,Math.PI*1.15,Math.PI*1.85);ctx.stroke();
-  // Close spin/hezi transform before drawing name (name stays stable)
-  if(doSpin||doHezi) ctx.restore();
+  // (spin transform already closed after body, hezi uses offset not save/restore)
   ctx.fillStyle='rgba(0,0,0,.72)';ctx.font='bold 7.5px Russo One';ctx.textAlign='center';
   const nm3=isP?playerName:cpuName, ntw=ctx.measureText(nm3).width+8;
   ctx.fillRect(e.x-ntw/2,ey-34,ntw,11);
@@ -2412,7 +2492,7 @@ function drawDribbleMoveVFX(){
     ctx.restore();
   }
   // CPU move anim
-  if(cpu._moveAnim>0){
+  if((cpu._moveAnim||0)>0){
     cpu._moveAnim=Math.max(0,(cpu._moveAnim||0)-0.016);
     const a=cpu._moveAnim/0.55;
     const col=cpu._moveType==='spin'?`rgba(100,200,255,${a*0.8})`:`rgba(255,220,0,${a*0.8})`;
