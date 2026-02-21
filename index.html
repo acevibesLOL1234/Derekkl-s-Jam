@@ -2098,62 +2098,91 @@ function updatePlayer(dt){
 
   if(player.shootPose){ player.poseT+=dt; if(player.poseT>0.85) player.shootPose=false; }
 
-  // ── DRIBBLE MOVES ──────────────────────────────────────────
-  if(player.moveAnim>0) player.moveAnim-=dt;
-  if(player.moveCooldown>0) player.moveCooldown-=dt;
-  if(player.anklebroken>0) player.anklebroken-=dt;
+// ── DRIBBLE MOVES ──────────────────────────────────────────
+if(player.moveAnim>0) player.moveAnim-=dt;
+if(player.moveCooldown>0) player.moveCooldown-=dt;
+if(player.anklebroken>0) player.anklebroken-=dt;
 
-  if(player.hasBall&&!ball.inFlight&&!ball.loose&&!player.dunking&&!meterActive&&player.moveCooldown<=0){
-    const cpuClose = dist(player,cpu)<110;
+if(player.hasBall&&!ball.inFlight&&!ball.loose&&!player.dunking&&!meterActive&&player.moveCooldown<=0){
+  const cpuClose = dist(player,cpu)<110;
 
-    if(fresh('KeyZ')){
+  // HEZI: Brief stutter-step pause → burst
+  if(fresh('KeyZ')){
+    player.moveAnim=0.45; player.moveType='hezi'; player.moveCooldown=1.8;
+    player.heziPhase=0; // 0=pause, 1=burst
+    player.heziPauseTimer=0.18; // 2-3 frame pause at 60fps
+    sfxHezi();
+    flash('HEZI! 🪄');
+    announce(`${playerName} WITH THE HESITATION!`);
+    // Immediately pause movement
+    player.vx*=0.15; player.vy*=0.15;
+    
+    if(cpuClose && cpu.stealAnim>0){
+      cpu.anklebroken=1.8; cpu.stealCD=3.5;
+      sfxAnkle();
+      flash('ANKLE BROKEN! 🩹 HEZI GOT EM!');
+      announce(`${cpuName} ON THE FLOOR — HEZI!`);
+      cpu.vx*=0.1; cpu.vy*=0.1;
+    }
+  }
+
+  // SPIN: Quick 180° pivot to change direction
+  if(fresh('KeyX')){
+    player.moveAnim=0.35; player.moveType='spin'; player.moveCooldown=2.0;
+    player.spinFrame=0; // 0-4 frames of rotation
+    player.spinFrameTimer=0;
+    const faceDir = player.vx>=0 ? 1 : -1;
+    player.spinDir = (mx!==0) ? -mx*faceDir : -faceDir; // spin opposite to current direction
+    sfxSpin();
+    flash('SPIN! 🔄');
+    announce(`${playerName} WITH THE SPIN MOVE!`);
+    
+    if(cpuClose && cpu.stealAnim>0){
+      cpu.anklebroken=2.0; cpu.stealCD=4.0;
+      sfxAnkle();
+      flash('SPIN CYCLE! 🌀 ANKLES GONE!');
+      announce(`${cpuName} SPUN INTO OBLIVION!`);
+      cpu.vx*=0.1; cpu.vy*=0.1;
+    }
+  }
+}
+
+// Update Hezi state machine
+if(player.moveType==='hezi' && player.moveAnim>0){
+  if(player.heziPhase===0){
+    // Pause phase: stutter-step (show shoulder dip)
+    player.heziPauseTimer-=dt;
+    if(player.heziPauseTimer<=0){
+      player.heziPhase=1;
+      // Burst in input direction or opposite of facing
       const faceDir = player.vx>=0 ? 1 : -1;
-      player.moveAnim=0.65; player.moveType='hezi'; player.moveCooldown=1.8;
-      player.heziDir=faceDir; player.heziPhase=0;
-      sfxHezi();
-      flash('HEZI! 🪄');
-      announce(`${playerName} WITH THE HESITATION!`);
-      player.vx=0; player.vy=0;
-      setTimeout(()=>{
-        if(player.moveType==='hezi'){
-          player.heziPhase=1;
-          const burstDir = (mx!==0) ? mx : -faceDir;
-          player.vx=burstDir*P_SPRINT*1.1;
-          player.vy=(my||0)*P_SPRINT*0.5;
-        }
-      }, 180);
-      if(cpuClose && cpu.stealAnim>0){
-        cpu.anklebroken=1.8; cpu.stealCD=3.5;
-        sfxAnkle();
-        flash('ANKLE BROKEN! 🩹 HEZI GOT EM!');
-        announce(`${cpuName} ON THE FLOOR — HEZI!`);
-        cpu.vx*=0.1; cpu.vy*=0.1;
-      }
-    }
-
-    if(fresh('KeyX')){
-      player.moveAnim=0.55; player.moveType='spin'; player.moveCooldown=2.0;
-      player.spinAngleDeg=0;
-      sfxSpin();
-      flash('SPIN! 🔄');
-      announce(`${playerName} WITH THE SPIN MOVE!`);
-      const ang = Math.atan2(cpu.y-player.y, cpu.x-player.x);
-      player.vx += Math.cos(ang+Math.PI)*P_SPRINT*0.8;
-      player.vy += Math.sin(ang+Math.PI)*P_SPRINT*0.5;
-      if(cpuClose && cpu.stealAnim>0){
-        cpu.anklebroken=2.0; cpu.stealCD=4.0;
-        sfxAnkle();
-        flash('SPIN CYCLE! 🌀 ANKLES GONE!');
-        announce(`${cpuName} SPUN INTO OBLIVION!`);
-        cpu.vx*=0.1; cpu.vy*=0.1;
-      }
+      const burstDir = (mx!==0) ? mx : -faceDir;
+      player.vx=burstDir*P_SPRINT*1.15;
+      player.vy=(my||0)*P_SPRINT*0.6;
     }
   }
+}
 
-  if(player.anklebroken>0&&!player.hasBall){
-    player.vx*=0.6; player.vy*=0.6;
+// Update Spin state machine
+if(player.moveType==='spin' && player.moveAnim>0){
+  player.spinFrameTimer+=dt;
+  const frameTime=0.07; // ~4 frames at 60fps
+  if(player.spinFrameTimer>=frameTime && player.spinFrame<4){
+    player.spinFrame++;
+    player.spinFrameTimer=0;
   }
+  // Maintain forward momentum during spin
+  const spinProg = player.spinFrame/4;
+  if(spinProg<1){
+    const ang = Math.atan2(cpu.y-player.y, cpu.x-player.x);
+    player.vx += Math.cos(ang+Math.PI)*P_SPRINT*0.15;
+    player.vy += Math.sin(ang+Math.PI)*P_SPRINT*0.1;
+  }
+}
 
+if(player.anklebroken>0&&!player.hasBall){
+  player.vx*=0.6; player.vy*=0.6;
+}
   // ── STEAL ──
   if(fresh('KeyQ')&&player.stealCD<=0&&!player.dunking){
     player.stealAnim=0.35;
