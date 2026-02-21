@@ -38,12 +38,8 @@ body::after{
 .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:3px 24px;}
 .crow{font-size:11px;color:#555;letter-spacing:.5px;}
 .crow span{color:#999;}
-
-/* Two-column layout for bottom cards */
 .mcard-row{display:flex;gap:10px;width:820px;margin-bottom:10px;}
 .mcard-row .mcard{flex:1;margin-bottom:0;width:auto;}
-
-/* UPDATE LOG */
 .update-list{list-style:none;padding:0;margin:0;}
 .update-list li{font-size:11px;color:#777;letter-spacing:.4px;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:8px;}
 .update-list li:last-child{border-bottom:none;}
@@ -53,15 +49,16 @@ body::after{
 .utag.tweak{background:rgba(100,120,255,.12);color:#8899ff;border:1px solid rgba(100,120,255,.25);}
 .update-list li .utxt{color:#888;flex:1;}
 .update-list li .uver{font-family:'Bebas Neue',cursive;font-size:10px;color:#ff4400;letter-spacing:2px;white-space:nowrap;}
-
-/* SOCIALS */
 .socials-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
 .social-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;border:1px solid rgba(255,80,0,.25);background:rgba(0,0,0,.6);color:#aaa;font-family:'Russo One',sans-serif;font-size:9px;letter-spacing:2px;text-decoration:none;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);transition:.15s;cursor:pointer;}
 .social-btn:hover{border-color:#ff6600;color:#ff6600;background:rgba(255,60,0,.08);}
 .social-btn .sico{font-size:14px;}
 .social-handle{color:#ff6600;font-size:10px;}
-
 .jbtn{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:8px;background:linear-gradient(180deg,#ff8800,#cc2200);color:#fff;border:none;padding:14px 80px;cursor:pointer;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:.12s;margin-top:6px;text-shadow:0 2px 6px rgba(0,0,0,.6);box-shadow:0 0 40px rgba(255,80,0,.5),inset 0 1px 0 rgba(255,200,100,.2);}
+.diff-btn{font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:4px;background:rgba(0,0,0,0.45);color:#ccc;border:2px solid #555;padding:10px 20px;cursor:pointer;transition:.15s;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:150px;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+.diff-btn:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.diff-btn.active{background:rgba(255,150,0,0.18);color:#fff;box-shadow:0 0 18px rgba(255,150,0,0.4);}
+.diff-sub{font-size:11px;letter-spacing:2px;opacity:0.7;font-family:'Rajdhani',sans-serif;}
 .jbtn:hover{background:linear-gradient(180deg,#ffaa00,#ff4400);transform:scale(1.05) translateY(-1px);box-shadow:0 0 60px rgba(255,100,0,.8);}
 .jbtn-sm{font-family:'Bebas Neue',cursive;font-size:17px;letter-spacing:4px;background:transparent;color:#666;border:1px solid #2a2a2a;padding:10px 34px;cursor:pointer;transition:.12s;clip-path:polygon(7px 0%,100% 0%,calc(100% - 7px) 100%,0% 100%);}
 .jbtn-sm:hover{color:#ccc;border-color:#555;}
@@ -101,6 +98,24 @@ canvas{display:block;}
 #announcer{position:fixed;top:80px;left:50%;transform:translateX(-50%);font-family:'Bebas Neue',cursive;font-size:28px;color:#ffcc00;letter-spacing:5px;text-shadow:0 0 20px rgba(255,200,0,.8),2px 2px 0 rgba(0,0,0,.9);opacity:0;transition:opacity .15s;white-space:nowrap;z-index:22;pointer-events:none;}
 #mute-btn{position:fixed;top:8px;right:10px;z-index:100;background:rgba(0,0,0,.85);border:1px solid #2a2a2a;color:#ff5500;font-family:'Russo One',sans-serif;font-size:9px;padding:5px 10px;cursor:pointer;letter-spacing:2px;}
 #mute-btn:hover{background:rgba(255,60,0,.1);}
+
+/* ═══════════ JUMP BALL OVERLAY ═══════════ */
+#jumpball-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:60;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+#jb-title{font-family:'Bebas Neue',cursive;font-size:72px;color:#ff6600;letter-spacing:10px;text-shadow:0 0 60px rgba(255,100,0,.9);}
+#jb-sub{font-family:'Russo One',sans-serif;font-size:12px;color:#ff3300;letter-spacing:8px;margin-top:-12px;}
+#jb-prompt{font-family:'Bebas Neue',cursive;font-size:32px;color:#ffcc00;letter-spacing:6px;margin-top:16px;text-shadow:0 0 20px rgba(255,200,0,.7);}
+#jb-bar-wrap{width:400px;height:28px;background:rgba(0,0,0,.8);border:2px solid rgba(255,80,0,.4);position:relative;overflow:hidden;margin-top:8px;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+#jb-bar{height:100%;width:0%;background:linear-gradient(90deg,#ff4400,#ffcc00);transition:none;position:relative;}
+#jb-marker{position:absolute;top:0;width:6px;height:100%;background:#00ff88;right:0;transform:translateX(50%);}
+#jb-green-zone{position:absolute;top:0;right:0;height:100%;background:rgba(0,255,136,.25);width:22%;}
+#jb-result{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:6px;margin-top:8px;min-height:36px;text-align:center;}
+#jb-countdown{font-family:'Bebas Neue',cursive;font-size:48px;color:#fff;letter-spacing:4px;min-height:60px;text-align:center;}
+#jb-players{display:flex;gap:80px;align-items:flex-end;margin-bottom:8px;}
+.jb-player{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.jb-player-icon{font-size:40px;}
+.jb-player-name{font-family:'Russo One',sans-serif;font-size:10px;letter-spacing:3px;color:#aaa;}
+.jb-player-jump{font-family:'Bebas Neue',cursive;font-size:20px;color:#444;letter-spacing:2px;min-height:24px;}
+
 /* ═══════════ STATS ═══════════ */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:820px;}
 .stat-card{background:rgba(255,60,0,.05);border:1px solid rgba(255,80,0,.18);padding:14px 18px;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
@@ -143,20 +158,15 @@ canvas{display:block;}
 #sbar-name-l{color:#44aaff;}
 #sbar-name-r{color:#ff4444;}
 
-
-/* ═══════════════════════ TC SYSTEM STYLES ═══════════════════════ */
+/* ═══════════════════════════════════════════ TABS ══════════════════════════════════════════ */
 #menu-tabs{display:flex;gap:0;margin-bottom:14px;width:820px;}
 .mtab{font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:5px;padding:9px 32px;cursor:pointer;border:1px solid rgba(255,80,0,.2);background:rgba(0,0,0,.5);color:#444;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:.12s;flex:1;text-align:center;}
 .mtab.active{background:linear-gradient(180deg,rgba(255,80,0,.18),rgba(255,40,0,.08));color:#ff6600;border-color:rgba(255,80,0,.5);}
 .mtab:hover:not(.active){color:#999;border-color:rgba(255,80,0,.3);}
 #tab-play,#tab-shop,#tab-inv{width:820px;}
 #tab-shop,#tab-inv{display:none;flex-direction:column;align-items:center;gap:10px;}
-
-/* TC WALLET */
 #tc-wallet{font-family:'Bebas Neue',cursive;font-size:16px;letter-spacing:4px;color:#ffcc44;text-shadow:0 0 12px rgba(255,200,0,.5);text-align:center;margin-bottom:2px;}
 #tc-wallet span{font-size:28px;color:#ffd700;}
-
-/* SHOP GRID */
 .shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:820px;}
 .shop-item{background:rgba(255,60,0,.05);border:1px solid rgba(255,80,0,.18);padding:12px 8px;text-align:center;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);cursor:pointer;transition:.15s;position:relative;}
 .shop-item:hover:not(.owned):not(.cant-afford){border-color:#ff6600;background:rgba(255,60,0,.12);}
@@ -168,8 +178,6 @@ canvas{display:block;}
 .shop-item-price{font-family:'Bebas Neue',cursive;font-size:14px;color:#ffd700;letter-spacing:3px;}
 .shop-item-price.owned-label{color:#00e676;font-size:11px;letter-spacing:2px;}
 .shop-section-title{font-family:'Russo One',sans-serif;font-size:9px;color:#ff5500;letter-spacing:6px;width:820px;padding:4px 0 2px;border-bottom:1px solid rgba(255,80,0,.15);}
-
-/* INVENTORY */
 .inv-section{width:820px;}
 .inv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px;}
 .inv-item{background:rgba(255,60,0,.05);border:1px solid rgba(255,80,0,.18);padding:10px 8px;text-align:center;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);cursor:pointer;transition:.15s;}
@@ -181,7 +189,6 @@ canvas{display:block;}
 .inv-item.equipped .inv-item-equip{color:#ffcc44;}
 .inv-item:not(.equipped) .inv-item-equip{color:#555;}
 .inv-empty{font-size:11px;color:#333;letter-spacing:2px;padding:20px;text-align:center;width:100%;}
-
 </style>
 </head>
 <body>
@@ -203,7 +210,34 @@ canvas{display:block;}
   </div>
 </div>
 
-<!-- ACCOUNT BAR (top-left in menu) -->
+<!-- JUMP BALL OVERLAY -->
+<div id="jumpball-overlay">
+  <div id="jb-title">JUMP BALL</div>
+  <div id="jb-sub">BLACKTOP · TIP OFF</div>
+  <div id="jb-players">
+    <div class="jb-player">
+      <div class="jb-player-icon">🏃</div>
+      <div class="jb-player-name" id="jb-p1-name">YOU</div>
+      <div class="jb-player-jump" id="jb-p1-jump"></div>
+    </div>
+    <div style="font-family:'Bebas Neue',cursive;font-size:28px;color:#444;letter-spacing:4px;padding-bottom:20px;">VS</div>
+    <div class="jb-player">
+      <div class="jb-player-icon">🤖</div>
+      <div class="jb-player-name" id="jb-p2-name">CPU</div>
+      <div class="jb-player-jump" id="jb-p2-jump"></div>
+    </div>
+  </div>
+  <div id="jb-countdown"></div>
+  <div id="jb-prompt">PRESS SPACE TO JUMP!</div>
+  <div id="jb-bar-wrap">
+    <div id="jb-green-zone"></div>
+    <div id="jb-bar"></div>
+    <div id="jb-marker"></div>
+  </div>
+  <div id="jb-result"></div>
+</div>
+
+<!-- ACCOUNT BAR -->
 <div class="account-bar" id="account-bar" style="display:none">
   <span id="account-name">PLAYER</span>
   <span class="logout-btn" onclick="doLogout()">SIGN OUT</span>
@@ -217,16 +251,12 @@ canvas{display:block;}
   </div>
   <div class="menu-fire">🔥🔥🔥</div>
   <div id="tc-wallet">⚡ TC <span id="tc-display">0</span></div>
-
-  <!-- TABS -->
   <div id="menu-tabs">
-    <div class="mtab active" onclick="switchTab('play')">▶ PLAY</div>
+    <div class="mtab active" onclick="launchGame()">▶ PLAY</div>
     <div class="mtab" onclick="switchTab('stats')">📈 STATS</div>
     <div class="mtab" onclick="switchTab('shop')">🛒 SHOP</div>
     <div class="mtab" onclick="switchTab('inv')">🎒 INVENTORY</div>
   </div>
-
-  <!-- ══ TAB: PLAY ══ -->
   <div id="tab-play">
     <div class="mcard" style="width:820px;">
       <div class="mcard-title">YOUR PLAYER</div>
@@ -249,12 +279,14 @@ canvas{display:block;}
           <div class="crow"><span>Z</span> — Hezi (hesitation)</div>
           <div class="crow"><span>X</span> — Spin Move</div>
           <div class="crow"><span>F</span> — D-Stance</div>
-          <div class="crow"><span>E at half court</span> — Check Ball</div>
+          <div class="crow"><span>Space (tip-off)</span> — Jump Ball</div>
         </div>
       </div>
       <div class="mcard">
         <div class="mcard-title">UPDATE LOG</div>
         <ul class="update-list">
+          <li><span class="uver">v1.6</span><span class="utag new">NEW</span><span class="utxt">Jump ball tip-off — press SPACE to jump at start of each game!</span></li>
+          <li><span class="uver">v1.6</span><span class="utag fix">FIX</span><span class="utxt">Winners ball fixed — scoring team KEEPS possession (not loser)</span></li>
           <li><span class="uver">v1.5</span><span class="utag new">NEW</span><span class="utxt">Dribble moves — Z=Hezi, X=Spin. Ankle break defenders who reach!</span></li>
           <li><span class="uver">v1.5</span><span class="utag new">NEW</span><span class="utxt">Supabase accounts — real login, cross-device data sync</span></li>
           <li><span class="uver">v1.4</span><span class="utag new">NEW</span><span class="utxt">TC currency system — earn coins, buy VFX &amp; gear in Shop</span></li>
@@ -262,9 +294,7 @@ canvas{display:block;}
           <li><span class="uver">v1.4</span><span class="utag new">NEW</span><span class="utxt">CPU shoots threes &amp; mid-rangers — real shot selection AI</span></li>
           <li><span class="uver">v1.3</span><span class="utag new">NEW</span><span class="utxt">Steals &amp; blocks give instant possession — no more checkup interruption</span></li>
           <li><span class="uver">v1.3</span><span class="utag fix">FIX</span><span class="utxt">Removed free throws — pure streetball, no stoppages</span></li>
-          <li><span class="uver">v1.2</span><span class="utag tweak">TWEAK</span><span class="utxt">CPU defense completely reworked — stays in front, creeps on still ball</span></li>
           <li><span class="uver">v1.1</span><span class="utag new">NEW</span><span class="utxt">On-fire streak system — 3 buckets in a row ignites player 🔥</span></li>
-          <li><span class="uver">v1.0</span><span class="utag fix">FIX</span><span class="utxt">Initial release — 1v1 streetball, shot meter, layups, dunks</span></li>
         </ul>
       </div>
     </div>
@@ -282,16 +312,25 @@ canvas{display:block;}
         </a>
       </div>
     </div>
+    <div class="mcard" style="width:820px;margin-bottom:12px;padding:18px 24px;">
+      <div class="mcard-title">DIFFICULTY</div>
+      <div id="diff-bar" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+        <button class="diff-btn" data-diff="easy"      onclick="setDifficulty('easy')"      style="border-color:#44cc44;">EASY<span class="diff-sub">−15% TC EARNED</span></button>
+        <button class="diff-btn active" data-diff="normal"   onclick="setDifficulty('normal')"    style="border-color:#44aaff;">NORMAL<span class="diff-sub">STANDARD TC</span></button>
+        <button class="diff-btn" data-diff="hard"      onclick="setDifficulty('hard')"      style="border-color:#ffaa22;">HARD<span class="diff-sub">+15% TC EARNED</span></button>
+        <button class="diff-btn" data-diff="very_hard" onclick="setDifficulty('very_hard')" style="border-color:#ff4444;">VERY DIFFICULT<span class="diff-sub">+40% TC EARNED</span></button>
+      </div>
+    </div>
     <button class="jbtn" onclick="launchGame()">▶ PLAY BALL</button>
     <div class="made-by">MADE BY <span>@DEREKKLL</span> ON TIKTOK</div>
   </div>
 
-  <!-- ══ TAB: STATS ══ -->
+  <!-- STATS TAB -->
   <div id="tab-stats" style="display:none;flex-direction:column;align-items:center;gap:10px;width:820px;">
     <div class="stat-grid" id="stat-grid"></div>
   </div>
 
-    <!-- ══ TAB: SHOP ══ -->
+  <!-- SHOP TAB -->
   <div id="tab-shop">
     <div class="shop-section-title">⚡ VFX</div>
     <div class="shop-grid" id="shop-vfx"></div>
@@ -301,7 +340,7 @@ canvas{display:block;}
     <div class="shop-grid" id="shop-balls"></div>
   </div>
 
-  <!-- ══ TAB: INVENTORY ══ -->
+  <!-- INVENTORY TAB -->
   <div id="tab-inv">
     <div class="inv-section">
       <div class="shop-section-title">⚡ EQUIPPED VFX</div>
@@ -341,7 +380,6 @@ canvas{display:block;}
   </div>
 </div>
 
-<!-- STATS BAR -->
 <div id="stats-bar">
   <div class="sbar-side" id="sbar-left">
     <div class="sstat"><span class="sval" id="s-p1-pts">0</span><span class="slbl">PTS</span></div>
@@ -434,7 +472,6 @@ function sfxBrick(){ for(let i=0;i<3;i++) osc(200+i*190,'square',0.22,0.1,i*0.04
 function sfxDunk(){ osc(95,'sine',0.32,0.65,0,38); osc(880,'sine',0.35,0.28,0.06); noiseShot(0.18,0.38,600,0); }
 function sfxHezi(){
   if(muted) return;
-  // Sharp cross — two quick tones
   const t=AC.currentTime;
   [0,0.08].forEach((off,i)=>{
     const o=AC.createOscillator(), g=AC.createGain();
@@ -446,7 +483,6 @@ function sfxHezi(){
 }
 function sfxSpin(){
   if(muted) return;
-  // Whoosh sweep
   const t=AC.currentTime, o=AC.createOscillator(), g=AC.createGain();
   o.connect(g);g.connect(AC.destination);
   o.type='sine';
@@ -456,7 +492,6 @@ function sfxSpin(){
 }
 function sfxAnkle(){
   if(muted) return;
-  // Descending "broken" crunch
   const t=AC.currentTime;
   [0,0.06,0.13].forEach((off,i)=>{
     const o=AC.createOscillator(), g=AC.createGain();
@@ -476,6 +511,19 @@ function sfxScore3(){ [440,550,660,880].forEach((f,i)=>osc(f,'sine',0.22,0.25,i*
 function sfxTurnover(){
   osc(180,'sawtooth',0.12,0.22); osc(140,'sawtooth',0.18,0.18,0.05);
   osc(100,'sawtooth',0.22,0.14,0.10);
+}
+function sfxTipoff(){
+  if(muted) return;
+  // Whistle + rising sting
+  sfxWhistle();
+  setTimeout(()=>{
+    [220,330,440,550,660].forEach((f,i)=>osc(f,'sine',0.15,0.18,i*0.04,f*1.5));
+  },200);
+}
+function sfxJump(){
+  if(muted) return;
+  osc(300,'sine',0.18,0.35,0,180);
+  noiseShot(0.12,0.2,800);
 }
 function sfxCheer(intensity=1){
   if(muted) return;
@@ -559,8 +607,158 @@ const GRAV=580;
 const DUNK_DIST=68;
 const HALFCOURT_X = W/2;
 const THREE_DIST=230;
-const P_SPEED=190, P_SPRINT=252;
-const CPU_SPEED=158, CPU_SPRINT=260;
+const P_SPEED=190, P_SPRINT=265;
+const CPU_SPEED=148, CPU_SPRINT=238;
+
+// ═══════════════════════════════════════════
+// JUMP BALL SYSTEM
+// ═══════════════════════════════════════════
+let jumpBallActive = false;
+let jbPhase = 'idle'; // 'countdown' | 'active' | 'done'
+let jbCountdown = 3;
+let jbCountdownTimer = 0;
+let jbBarVal = 0;
+let jbBarDir = 1;
+let jbBarSpeed = 68; // % per second
+let jbPlayerJumped = false;
+let jbCPUJumped = false;
+let jbPlayerScore = 0; // 0-100 value when jumped
+let jbCPUScore = 0;
+let jbResult = 0; // 1=player wins, 2=cpu wins
+let jbDoneTimer = 0;
+const JB_GREEN_START = 78; // green zone 78-100%
+
+function startJumpBall(){
+  jumpBallActive = true;
+  jbPhase = 'countdown';
+  jbCountdown = 3;
+  jbCountdownTimer = 1.0;
+  jbBarVal = 0;
+  jbBarDir = 1;
+  jbPlayerJumped = false;
+  jbCPUJumped = false;
+  jbPlayerScore = 0;
+  jbCPUScore = 0;
+  jbResult = 0;
+  jbDoneTimer = 0;
+
+  document.getElementById('jb-p1-name').textContent = playerName;
+  document.getElementById('jb-p2-name').textContent = cpuName;
+  document.getElementById('jb-p1-jump').textContent = '';
+  document.getElementById('jb-p2-jump').textContent = '';
+  document.getElementById('jb-result').textContent = '';
+  document.getElementById('jb-countdown').textContent = '3';
+  document.getElementById('jb-prompt').textContent = 'GET READY...';
+  document.getElementById('jb-bar').style.width = '0%';
+  document.getElementById('jumpball-overlay').style.display = 'flex';
+}
+
+function updateJumpBall(dt){
+  if(!jumpBallActive) return;
+
+  if(jbPhase === 'countdown'){
+    jbCountdownTimer -= dt;
+    if(jbCountdownTimer <= 0){
+      jbCountdown--;
+      if(jbCountdown <= 0){
+        // Go live!
+        jbPhase = 'active';
+        document.getElementById('jb-countdown').textContent = '';
+        document.getElementById('jb-prompt').textContent = '⬆️ PRESS SPACE TO JUMP! ⬆️';
+        sfxTipoff();
+      } else {
+        jbCountdownTimer = 1.0;
+        document.getElementById('jb-countdown').textContent = String(jbCountdown);
+      }
+    } else {
+      // Tick down visual in countdown timer text
+      const remaining = Math.ceil(jbCountdownTimer * 10)/10;
+      // keep the number big
+    }
+    return;
+  }
+
+  if(jbPhase === 'active'){
+    // Animate bar
+    jbBarVal += jbBarDir * jbBarSpeed * dt;
+    if(jbBarVal >= 100){ jbBarVal = 100; jbBarDir = -1; }
+    if(jbBarVal <= 0)  { jbBarVal = 0;   jbBarDir =  1; }
+    // Gradually speed up
+    jbBarSpeed = Math.min(200, jbBarSpeed + dt * 18);
+
+    document.getElementById('jb-bar').style.width = jbBarVal + '%';
+
+    // CPU auto-jumps at a random point with varying skill (simulates reaction time)
+    if(!jbCPUJumped){
+      if(!jbCPUJumpTarget) jbCPUJumpTarget = 72 + Math.random() * 22; // cpu aims for 72-94%
+      if(jbBarVal >= jbCPUJumpTarget && jbBarDir === 1){
+        jbCPUJumped = true;
+        jbCPUScore = jbBarVal;
+        const label = jbCPUScore >= JB_GREEN_START ? '🟢 ' + Math.round(jbCPUScore) + '%' : '🟡 ' + Math.round(jbCPUScore) + '%';
+        document.getElementById('jb-p2-jump').textContent = label;
+        sfxJump();
+        if(jbPlayerJumped) resolveJumpBall();
+      }
+    }
+
+    // Player jump via SPACE — polled in updateJumpBallInput
+    return;
+  }
+
+  if(jbPhase === 'done'){
+    jbDoneTimer -= dt;
+    if(jbDoneTimer <= 0){
+      finishJumpBall();
+    }
+  }
+}
+
+let jbCPUJumpTarget = null;
+
+function jumpBallPlayerJump(){
+  if(jbPhase !== 'active' || jbPlayerJumped) return;
+  jbPlayerJumped = true;
+  jbPlayerScore = jbBarVal;
+  const label = jbPlayerScore >= JB_GREEN_START ? '🟢 ' + Math.round(jbPlayerScore) + '%' : '🟡 ' + Math.round(jbPlayerScore) + '%';
+  document.getElementById('jb-p1-jump').textContent = label;
+  sfxJump();
+  if(jbCPUJumped) resolveJumpBall();
+}
+
+function resolveJumpBall(){
+  jbPhase = 'done';
+  jbDoneTimer = 2.2;
+
+  // Whoever has the higher raw score wins — no randomness, no tricks
+  jbResult = jbPlayerScore >= jbCPUScore ? 1 : 2;
+  const winner = jbResult === 1 ? playerName : cpuName;
+  const resultEl = document.getElementById('jb-result');
+
+  if(jbResult === 1){
+    resultEl.style.color = '#00ff88';
+    resultEl.textContent = `🏆 ${playerName} WINS THE TIP! YOU BALL FIRST!`;
+  } else {
+    resultEl.style.color = '#ff4444';
+    resultEl.textContent = `${cpuName} WINS THE TIP! CPU BALL FIRST!`;
+  }
+
+  sfxCheer(1);
+  document.getElementById('jb-prompt').textContent = '';
+}
+
+function finishJumpBall(){
+  jumpBallActive = false;
+  jbCPUJumpTarget = null;
+  document.getElementById('jumpball-overlay').style.display = 'none';
+
+  // The jump ball winner ATTACKS first
+  const firstAttacker = jbResult; // 1=player attacks, 2=cpu attacks
+  startCheckup(firstAttacker);
+  startBGMusic();
+  gameRunning = true;
+  lastTS = performance.now();
+  requestAnimationFrame(t=>{ lastTS=t; requestAnimationFrame(gameLoop); });
+}
 
 // ═══════════════════════════════════════════
 // GAME STATE
@@ -617,6 +815,8 @@ const player={
   stillT:0,
   handX:0, handY:0,
   shootPose:false, poseT:0, poseZone:'',
+  stamina:100, sprinting:false,
+  moveAnim:0, moveType:'', moveCooldown:0, anklebroken:0,
 };
 const cpu={
   x:600, y:H/2, vx:0, vy:0,
@@ -648,7 +848,7 @@ let dribSoundT=0;
 
 window.addEventListener('keydown',e=>{
   if(!keys[e.code]) keys[e.code]='fresh';
-  if(gameRunning) e.preventDefault();
+  if(gameRunning||jumpBallActive) e.preventDefault();
 });
 window.addEventListener('keyup',e=>{ keys[e.code]=false; });
 function fresh(k){ if(keys[k]==='fresh'){keys[k]=true;return true;}return false; }
@@ -700,7 +900,6 @@ function giveBall(ent){
   player.shootPose=false;
 }
 
-// Knock ball loose without going through giveBall
 function pokeBallLoose(fromEnt, dirX, power){
   player.hasBall=false; cpu.hasBall=false;
   ball.inFlight=false; ball.trail=[];
@@ -722,7 +921,7 @@ function isLayupZone(){ return dist(player,HOOP_R)<95 && dist(player,HOOP_R)>=DU
 function canDunk(){ return dist(player,HOOP_R)<(DUNK_DIST+getDunkBonus()) && player.hasBall && !ball.inFlight && !ball.loose && !player.dunking && !meterActive; }
 
 // ═══════════════════════════════════════════
-// TURNOVER SYSTEM — replaces fouls/FTs
+// TURNOVER SYSTEM
 // ═══════════════════════════════════════════
 function showTurnoverBanner(title, sub){
   document.getElementById('to-title').textContent = title;
@@ -732,14 +931,10 @@ function showTurnoverBanner(title, sub){
   setTimeout(()=>{ el.style.display='none'; }, 1800);
 }
 
-// Called when a turnover happens. team = team that LOST the ball (1 or 2).
-// newPossessor = 1 or 2 (who gets it). Gives ball immediately, no checkup.
-// If loose=true, ball is already flying — skip giveBall, just track stats
 function registerTurnover(losingTeam, newPossessorTeam, title, sub, loose=false){
   if(losingTeam === 1) p1Turnovers++;
   else                 p2Turnovers++;
 
-  // Break streak
   if(losingTeam === 1){ p1Streak = 0; p1OnFire = false; }
   else                { p2Streak = 0; p2OnFire = false; }
 
@@ -755,9 +950,8 @@ function registerTurnover(losingTeam, newPossessorTeam, title, sub, loose=false)
   dunkContested=false; cpuDunkContested=false;
   shotClock=24;
 
-  if(loose) return; // ball is already loose — don't giveBall
+  if(loose) return;
 
-  // Give possession IMMEDIATELY — no checkup
   if(newPossessorTeam === 1){
     giveBall(player);
     cpu.hasBall=false; player.hasBall=true;
@@ -774,56 +968,62 @@ function registerTurnover(losingTeam, newPossessorTeam, title, sub, loose=false)
 function updateTurnoverHUD(){ updateStatsBar(); }
 
 // ═══════════════════════════════════════════
-// CHECK-UP SYSTEM (only used after scores)
+// CHECK-UP SYSTEM
 // ═══════════════════════════════════════════
-// Checkup state
-let checkupPhase = 'idle'; // 'frozen' | 'throw' | 'live'
+// In streetball: WINNERS BALL — the scoring team keeps possession.
+// After a score, the scoring team (winnersTeam) attacks again.
+// The check-up means: the attacker's OPPONENT holds the ball at half court,
+// then passes it back to the attacker who proceeds to attack.
+//
+// So if Player scores → Player gets next possession → CPU is at half court
+// with the ball → CPU passes to Player → Player attacks.
+// "checkupBallHolder" = who currently has the ball and will THROW it to the attacker.
+
+let checkupPhase = 'idle';
 let checkupFrozenTimer = 0;
 let checkupBallInFlight = false;
 
-function startCheckup(attackerTeam){
-  possessionTeam = attackerTeam;
+function startCheckup(attackingTeam){
+  // attackingTeam = the team that will ATTACK (has possession after check-up)
+  possessionTeam = attackingTeam;
   checkupActive = true;
   checkupAccepted = false;
   checkupTimer = 0;
   checkupPhase = 'frozen';
-  checkupFrozenTimer = 1.8; // freeze both players for 1.8s
+  checkupFrozenTimer = 1.8;
   checkupBallInFlight = false;
 
-  // Position players at their START spots — they don't teleport mid-game,
-  // these are just where they begin for the very first checkup
-  // For subsequent checkups, just freeze them where they are
+  // Always teleport both players to halfcourt for the check-up
+  player.vx=0; player.vy=0; cpu.vx=0; cpu.vy=0;
+  player.jumping=false; player.jumpOff=0; player.jumpVel=0;
+  cpu.jumping=false; cpu.jumpOff=0; cpu.jumpVel=0;
 
-  if(attackerTeam === 1){
-    // Player has ball, CPU receives
-    // Move players near halfcourt if they're far from it (first possession only)
-    if(Math.abs(player.x - HALFCOURT_X) > 220){
-      player.x = HALFCOURT_X - 55; player.y = H/2;
-      cpu.x    = HALFCOURT_X + 80; cpu.y = H/2;
-    }
+  if(attackingTeam === 1){
+    // PLAYER attacks → CPU stands at halfcourt with ball → throws to PLAYER
+    cpu.x    = HALFCOURT_X + 28; cpu.y = H/2;
+    player.x = HALFCOURT_X - 80; player.y = H/2;
+    checkupBallHolder = 2;
     player.hasBall=false; cpu.hasBall=false;
     ball.inFlight=false; ball.loose=false; ball.trail=[];
-    ball.x=player.x; ball.y=player.y-8;
+    ball.x=cpu.x - 12; ball.y=cpu.y - 14;
     ball.vx=0; ball.vy=0;
-    checkupBallHolder = 1; // player will throw to cpu
     cpu.shootTimer = 3;
-    showCkUI('PASS TO CPU — E TO CHECK 🏀', '#ff6600');
-    flash('FREEZE — CHECK THE BALL',2);
-    announce(`${playerName} HAS BALL — CHECKING IN`);
+    showCkUI('WINNERS BALL — WAIT FOR CHECK 🏀', '#44aaff');
+    flash('WINNERS BALL — PLAYER ATTACKING',2);
+    announce(`${playerName} WINS THE BALL — CHECKING IN`);
   } else {
-    // CPU has ball, Player receives
-    if(Math.abs(cpu.x - HALFCOURT_X) > 220){
-      cpu.x    = HALFCOURT_X + 55; cpu.y = H/2;
-      player.x = HALFCOURT_X - 80; player.y = H/2;
-    }
+    // CPU attacks → PLAYER stands at halfcourt with ball → press E to throw to CPU
+    player.x = HALFCOURT_X - 28; player.y = H/2;
+    cpu.x    = HALFCOURT_X + 80; cpu.y = H/2;
+    checkupBallHolder = 1;
     player.hasBall=false; cpu.hasBall=false;
     ball.inFlight=false; ball.loose=false; ball.trail=[];
-    ball.x=cpu.x; ball.y=cpu.y-8;
+    ball.x=player.x + 12; ball.y=player.y - 14;
     ball.vx=0; ball.vy=0;
-    checkupBallHolder = 2; // cpu throws to player
-    showCkUI('CPU IS CHECKING BALL IN...', '#ff6600');
-    flash('FREEZE — WAIT FOR THE BALL',2);
-    announce(`${cpuName} CHECKING BALL IN`);
+    cpu.shootTimer = 2.2;
+    showCkUI('PRESS E TO CHECK BALL TO CPU 🏀', '#ff4444');
+    flash('WINNERS BALL — CPU ATTACKING',2);
+    announce(`${cpuName} KEEPS THE BALL — CHECKING IN`);
   }
 }
 
@@ -834,19 +1034,18 @@ function showCkUI(msg, col){
 function hideCkUI(){ document.getElementById('checkup-ui').style.display='none'; }
 
 function throwCheckBall(){
-  // Ball flies as an arc from thrower to receiver
   checkupBallInFlight = true;
-  ball.inFlight = false; ball.loose = false; // we'll manually animate it
+  ball.inFlight = false; ball.loose = false;
   ball.trail = [];
 
-  if(checkupBallHolder === 1){
-    // Player throws to CPU
-    ball._ckFrom = {x:player.x, y:player.y-8};
-    ball._ckTo   = {x:cpu.x,    y:cpu.y-8};
-  } else {
-    // CPU throws to player
-    ball._ckFrom = {x:cpu.x,  y:cpu.y-8};
+  if(checkupBallHolder === 2){
+    // CPU (defender) throws to PLAYER (attacker)
+    ball._ckFrom = {x:cpu.x, y:cpu.y-8};
     ball._ckTo   = {x:player.x, y:player.y-8};
+  } else {
+    // PLAYER (defender) throws to CPU (attacker)
+    ball._ckFrom = {x:player.x, y:player.y-8};
+    ball._ckTo   = {x:cpu.x,   y:cpu.y-8};
   }
   ball._ckT    = 0;
   ball._ckDur  = Math.max(0.3, Math.hypot(ball._ckTo.x-ball._ckFrom.x, ball._ckTo.y-ball._ckFrom.y)/400);
@@ -859,36 +1058,41 @@ function updateCheckup(dt){
   if(!checkupActive) return;
   checkupTimer += dt;
 
-  // ── PHASE 1: FROZEN — both players frozen, countdown before throw ──
   if(checkupPhase === 'frozen'){
-    // Players can't move during freeze
     checkupFrozenTimer -= dt;
     const t = Math.ceil(checkupFrozenTimer);
-    showCkUI(
-      checkupBallHolder===1
-        ? `CHECKING IN — ${t}`
-        : `CPU CHECKING IN — ${t}`,
-      '#ff6600'
-    );
-    if(checkupFrozenTimer <= 0){
-      checkupPhase = 'throw';
-      throwCheckBall();
+
+    if(checkupBallHolder === 2){
+      // CPU holds, waiting to throw to player
+      showCkUI(`CPU CHECKING IN — ${t}`, '#ff4444');
+      // CPU auto-throws after countdown
+      if(checkupFrozenTimer <= 0){
+        checkupPhase = 'throw';
+        throwCheckBall();
+      }
+    } else {
+      // Player holds, waiting to press E to throw to CPU
+      showCkUI(`PRESS E TO CHECK TO CPU — ${t}`, '#44aaff');
+      // Player presses E to throw early, or auto-throws when timer runs out
+      const eNow = held('KeyE');
+      if((eNow && !eWas) || checkupFrozenTimer <= 0){
+        checkupPhase = 'throw';
+        throwCheckBall();
+      }
+      eWas = held('KeyE');
     }
-    return; // no movement during freeze
+    return;
   }
 
-  // ── PHASE 2: BALL IN FLIGHT ──────────────────────────────────────
   if(checkupPhase === 'throw' && checkupBallInFlight){
     ball._ckT += dt;
     const prog = Math.min(1, ball._ckT / ball._ckDur);
-    // Arc path
     ball.x = ball._ckFrom.x + (ball._ckTo.x - ball._ckFrom.x)*prog;
     ball.y = ball._ckFrom.y + (ball._ckTo.y - ball._ckFrom.y)*prog
-           - Math.sin(Math.PI*prog)*36; // arc height
+           - Math.sin(Math.PI*prog)*36;
     ball.spinAngle += 8*dt;
 
     if(prog >= 1){
-      // Ball caught — game goes live
       checkupBallInFlight = false;
       checkupPhase = 'live';
       checkupActive = false;
@@ -896,51 +1100,41 @@ function updateCheckup(dt){
       hideCkUI();
       shotClock = 24;
 
-      if(checkupBallHolder === 1){
-        // CPU caught the ball — CPU attacks, player defends
-        // CPU starts with ball where they are, no teleport
-        cpu.hasBall=true; player.hasBall=false;
-        ball.x=cpu.x-14; ball.y=cpu.y+2;
-        ball.inFlight=false; ball.loose=false;
-        cpu.shootTimer=2.8;
-        flash("BALL IN — PLAY DEFENSE! 🛡️",2);
-        announce('BALL IN — GAME ON!');
-      } else {
-        // Player caught the ball — player attacks
+      if(checkupBallHolder === 2){
+        // CPU threw to PLAYER → PLAYER has ball and attacks
         player.hasBall=true; cpu.hasBall=false;
         ball.x=player.x+14; ball.y=player.y+2;
         ball.inFlight=false; ball.loose=false;
         cpu.shootTimer=3;
-        flash("GOT IT — LET'S RUN! 🏀",2);
+        flash("GOT IT — ATTACK! 🏀", 2);
+        announce('BALL IN — GAME ON!');
+      } else {
+        // PLAYER threw to CPU → CPU has ball and attacks
+        cpu.hasBall=true; player.hasBall=false;
+        ball.x=cpu.x-14; ball.y=cpu.y+2;
+        ball.inFlight=false; ball.loose=false;
+        cpu.shootTimer=2.2;
+        flash("CPU HAS BALL — PLAY DEFENSE! 🛡️", 2);
         announce('BALL IN — GAME ON!');
       }
     }
-    return; // no player movement while ball in air
+    return;
   }
-
-  // ── PHASE 3: LIVE — shouldn't reach here since checkupActive=false ──
 }
-
-function completeCheckup(){ /* legacy — no longer called */ }
 
 // ═══════════════════════════════════════════
 // SCORING + RESET
 // ═══════════════════════════════════════════
-// ── VFX SCORE EXPLOSIONS ─────────────────────────────────────────────────────
-// Each VFX has a unique score explosion effect
 function spawnScoreVFX(hx, hy, vfxList, pts){
   vfxList.forEach(vfx=>{
     switch(vfx){
-
       case 'vfx_fire_trail': {
-        // Fireball ring explosion
         for(let i=0;i<28;i++){
           const a=Math.PI*2*(i/28), spd=180+Math.random()*220;
           particles.push({x:hx,y:hy, vx:Math.cos(a)*spd, vy:Math.sin(a)*spd-80,
             life:0.9,maxLife:0.9, r:4+Math.random()*5,
             color:`hsl(${10+Math.random()*40},100%,${50+Math.random()*30}%)`});
         }
-        // Rising embers
         for(let i=0;i<14;i++){
           particles.push({x:hx+(Math.random()-.5)*50,y:hy,
             vx:(Math.random()-.5)*60, vy:-150-Math.random()*180,
@@ -949,23 +1143,18 @@ function spawnScoreVFX(hx, hy, vfxList, pts){
         }
         break;
       }
-
       case 'vfx_lightning': {
-        // Yellow electric burst — fast sharp rays
         for(let i=0;i<20;i++){
           const a=Math.PI*2*(i/20)+Math.random()*0.3, spd=200+Math.random()*300;
           particles.push({x:hx,y:hy, vx:Math.cos(a)*spd, vy:Math.sin(a)*spd,
             life:0.5,maxLife:0.5, r:2+Math.random()*2,
             color:`hsl(55,100%,${70+Math.random()*30}%)`});
         }
-        // Big white flash particle
         particles.push({x:hx,y:hy, vx:0,vy:0, life:0.25,maxLife:0.25,
           r:38, color:'rgba(255,255,200,0.45)'});
         break;
       }
-
       case 'vfx_ice': {
-        // Shatter effect — ice blue shards flying outward
         for(let i=0;i<24;i++){
           const a=Math.PI*2*(i/24), spd=120+Math.random()*180;
           const hue=185+Math.random()*35;
@@ -973,7 +1162,6 @@ function spawnScoreVFX(hx, hy, vfxList, pts){
             life:1.1,maxLife:1.1, r:3+Math.random()*6,
             color:`hsl(${hue},90%,${70+Math.random()*25}%)`});
         }
-        // Snowflake drift upward
         for(let i=0;i<10;i++){
           particles.push({x:hx+(Math.random()-.5)*60,y:hy,
             vx:(Math.random()-.5)*40, vy:-80-Math.random()*120,
@@ -982,9 +1170,7 @@ function spawnScoreVFX(hx, hy, vfxList, pts){
         }
         break;
       }
-
       case 'vfx_purple_haze': {
-        // Slow billowing purple smoke clouds
         for(let i=0;i<18;i++){
           const a=Math.random()*Math.PI*2, spd=60+Math.random()*120;
           particles.push({x:hx+(Math.random()-.5)*30,y:hy+(Math.random()-.5)*20,
@@ -992,7 +1178,6 @@ function spawnScoreVFX(hx, hy, vfxList, pts){
             life:1.6,maxLife:1.6, r:10+Math.random()*16,
             color:`hsla(${270+Math.random()*40},70%,55%,0.45)`});
         }
-        // Swirling ring
         for(let i=0;i<16;i++){
           const a=Math.PI*2*(i/16), spd=90+Math.random()*60;
           particles.push({x:hx,y:hy, vx:Math.cos(a)*spd, vy:Math.sin(a)*spd-30,
@@ -1001,23 +1186,18 @@ function spawnScoreVFX(hx, hy, vfxList, pts){
         }
         break;
       }
-
       case 'vfx_golden_hour': {
-        // Gold coin-shower + sparkles
         for(let i=0;i<30;i++){
           const a=Math.random()*Math.PI*2, spd=100+Math.random()*280;
           particles.push({x:hx,y:hy-10, vx:Math.cos(a)*spd, vy:Math.sin(a)*spd-120,
             life:1.2,maxLife:1.2, r:3+Math.random()*5,
             color:`hsl(${42+Math.random()*18},100%,${55+Math.random()*30}%)`});
         }
-        // Big golden glow fade
         particles.push({x:hx,y:hy, vx:0,vy:-20, life:0.6,maxLife:0.6,
           r:55, color:'rgba(255,200,0,0.25)'});
         break;
       }
-
       case 'vfx_storm': {
-        // Thunder rings expanding outward + dark blue bolts
         for(let ring=0;ring<3;ring++){
           setTimeout(()=>{
             for(let i=0;i<20;i++){
@@ -1028,7 +1208,6 @@ function spawnScoreVFX(hx, hy, vfxList, pts){
             }
           }, ring*120);
         }
-        // Dark cloud burst
         particles.push({x:hx,y:hy, vx:0,vy:0, life:0.35,maxLife:0.35,
           r:48, color:'rgba(20,40,120,0.4)'});
         break;
@@ -1045,7 +1224,6 @@ function handleScore(team, pts){
     if(p1Streak>=3&&!p1OnFire){ p1OnFire=true; fireTimer=0; sfxFireUp(); showFireBanner(1); }
     sfxCheer(pts===3?1.0:0.75);
     triggerNet('R',pts===3?1.4:1.0);
-    // Fire equipped VFX explosion at the hoop
     if(activeVFX && activeVFX.length>0) spawnScoreVFX(HOOP_R.x, HOOP_R.y, activeVFX, pts);
     if(pts===3){ sfxScore3(); flash(`${playerName} FROM DEEP! 🔥 +3`); announce(`BOOM! THREE POINTER — ${playerName}!!!`); }
     else if(pts===2 && !player.dunking){ flash(`${playerName} SCORES! +2`); announce(`BUCKET — ${playerName}!`); }
@@ -1059,10 +1237,15 @@ function handleScore(team, pts){
     if(pts===3){ flash(`${cpuName} BURIES A 3!`); announce(`${cpuName} WITH THE THREE!!!!`); }
     else{ flash(`${cpuName} SCORES! +${pts}`); announce(`${cpuName} — BUCKET!`); }
   }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // WINNERS BALL: the team that SCORED keeps possession.
+  // Pass `team` (scorer) as the attacking team for next round.
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   winnersTeam = team;
   updateFireHUD();
   if(checkWin()) return;
-  setTimeout(()=>{ resetRound(team); },350);
+  setTimeout(()=>{ resetRound(team); }, 350); // pass SCORING team = next attacker
 }
 
 function resetRound(attackingTeam){
@@ -1074,7 +1257,7 @@ function resetRound(attackingTeam){
   ball.inFlight=false; ball.loose=false; ball.trail=[];
   shotClock=24;
   dunkContested=false; cpuDunkContested=false;
-  startCheckup(attackingTeam);
+  startCheckup(attackingTeam); // scoring team attacks again
 }
 
 function showFireBanner(team){
@@ -1130,7 +1313,6 @@ function updateArc(dt){
 
 function handleLand(){
   const{arcMade:made,arcPts:pts,arcShooter:sh}=ball;
-
   if(made){
     sfxSwish();
     player.shootPose=false;
@@ -1153,18 +1335,16 @@ function updateLoose(dt){
   if(!ball.loose) return;
   ball.vy+=GRAV*dt; ball.x+=ball.vx*dt; ball.y+=ball.vy*dt;
   ball.spinAngle+=(Math.abs(ball.vx)+Math.abs(ball.vy))*0.012*dt;
-  // Floor bounce — realistic roll
   if(ball.y+ball.r>FLOOR){
     ball.y=FLOOR-ball.r;
     ball.vy*=-0.42; ball.vx*=0.78;
     if(Math.abs(ball.vy)<20) ball.vy=0;
-    if(Math.abs(ball.vx)<8)  ball.vx*=0.5; // slow roll
+    if(Math.abs(ball.vx)<8)  ball.vx*=0.5;
   }
   if(ball.x-ball.r<18){ ball.x=18+ball.r; ball.vx*=-0.55; }
   if(ball.x+ball.r>W-18){ ball.x=W-18-ball.r; ball.vx*=-0.55; }
-  ball.vx*=(1-0.18*dt); // rolling friction
+  ball.vx*=(1-0.18*dt);
 
-  // Only pickup if player/CPU walks into ball (no auto-rebound)
   const pdist=dist(ball,player), cdist=dist(ball,cpu);
   if(pdist<22){
     giveBall(player); ball.loose=false;
@@ -1181,8 +1361,6 @@ function updateLoose(dt){
 // ═══════════════════════════════════════════
 // SHOOTING
 // ═══════════════════════════════════════════
-
-// 0=wide open, 1=smothered
 function contestLevel(){
   const d = getPlayerDefDist();
   if(d > 185) return 0;
@@ -1194,12 +1372,11 @@ function contestLevel(){
 function startShot(){
   if(ball.inFlight||ball.loose||!player.hasBall||meterActive||player.dunking) return;
 
-  // ── BEHIND HALF COURT: no meter, instant desperation heave ──
   if(player.x < W/2){
     player.shootPose=true; player.poseT=0; player.poseZone='LATE';
     sfxShoot();
     const fireBonus=p1OnFire?1.08:1;
-    const made = Math.random() < 0.038 * fireBonus; // ~4% max
+    const made = Math.random() < 0.038 * fireBonus;
     ball.x=player.handX||player.x+16; ball.y=player.handY||player.y-10;
     launchArc('player', HOOP_R, made, 3, 1, 160);
     player.hasBall=false;
@@ -1211,16 +1388,15 @@ function startShot(){
   shotStartedAs3 = isAt3pt(player);
   shotPts = shotStartedAs3 ? 3 : 2;
   meterActive=true; meterVal=0; meterDir=1; meterBounced=false; meterReleased=false;
-  meterSpeed = shotPts===3 ? 210 : 188; // faster meter
+  meterSpeed = shotPts===3 ? 210 : 188;
   releaseZone='';
 
-  // Green zone shrinks with contest: Wide Open=big window, Smothered=tiny sliver
   const info=opennessInfo(getPlayerDefDist());
   const contest = contestLevel();
-  const baseGreenSize = info.gSize; // wide open=0.20, smothered=0.06
-  const contestShrink = 1 - (contest * 0.70); // smothered = 70% smaller
-  const shootBonus = getShootBonus(); // stat upgrade bonus
-  const finalGreenSize = Math.max(0.025, baseGreenSize * contestShrink + shootBonus); // 2.5% floor
+  const baseGreenSize = info.gSize;
+  const contestShrink = 1 - (contest * 0.70);
+  const shootBonus = getShootBonus();
+  const finalGreenSize = Math.max(0.025, baseGreenSize * contestShrink + shootBonus);
   greenHi=100; greenLo=Math.round((1-finalGreenSize)*100);
 
   if(isLayupZone()) currentLayup=LAYUPS[Math.floor(Math.random()*LAYUPS.length)];
@@ -1237,17 +1413,16 @@ function releaseShot(){
 
   let zone,baseMk;
   if(!meterBounced){
-    if(v>=greenLo){zone='GREEN';baseMk=shotPts===3?0.92:0.97;}      // GREEN = guaranteed
+    if(v>=greenLo){zone='GREEN';baseMk=shotPts===3?0.92:0.97;}
     else if(v>=slightlyLo){zone='SLIGHTLY EARLY';baseMk=shotPts===3?0.36:0.48;}
     else{zone='EARLY';baseMk=shotPts===3?0.04:0.06;}
   } else {
-    if(v>=greenLo){zone='GREEN';baseMk=shotPts===3?0.92:0.97;}      // GREEN = guaranteed
+    if(v>=greenLo){zone='GREEN';baseMk=shotPts===3?0.92:0.97;}
     else if(v>=greenLo-slightlyW){zone='SLIGHTLY LATE';baseMk=shotPts===3?0.36:0.48;}
     else{zone='LATE';baseMk=shotPts===3?0.04:0.06;}
   }
   releaseZone=zone; player.poseZone=zone;
   sfxShoot();
-  // Green = no contest penalty. Miss zone = contest still hurts you.
   const bonus = zone==='GREEN' ? 1.0 : opennessInfo(getPlayerDefDist()).bonus;
   const fireBonus=p1OnFire?1.18:1;
   const made=Math.random()<baseMk*bonus*fireBonus;
@@ -1327,10 +1502,7 @@ function updateDunk(dt){
       if(!cpu.jumping && cpu.blockCD <= 0){
         cpu.jumping=true; cpu.jumpVel=-300; cpu.blockAnim=0.8; cpu.blockCD=2.5;
       }
-      if(cpu.jumping && cpu.jumpOff < -20){
-        dunkContested=true;
-        flash('CONTESTED DUNK! 😤');
-      }
+      if(cpu.jumping && cpu.jumpOff < -20){ dunkContested=true; flash('CONTESTED DUNK! 😤'); }
     }
     if(player.dunkT>0.18){player.dunkPhase=2; player.dunkT=0;}
   } else if(player.dunkPhase===2){
@@ -1417,7 +1589,7 @@ function updateCPUDunk(dt){
         if(playerClose && playerAirborne) makePct = 0.42;
         else makePct = 0.66;
       }
-      resolveCPUDunk(Math.random() < makePct);
+      resolveCPUDunk(Math.random() < Math.min(0.99, makePct * getCPUDiffMult()));
     }
   }
 }
@@ -1454,71 +1626,58 @@ function updateCPU(dt){
     const ob = opennessInfo(cpuDefDist).bonus;
     const fireBonus = p2OnFire ? 1.2 : 1;
 
-    // ── WIDE OPEN CHECK — shoot immediately if player is far ─────────
-    // If player is more than 180px away, CPU doesn't wait for timer
     const wideOpen = cpuDefDist > 180;
     const timerReady = cpu.shootTimer <= 0;
     const canShootNow = timerReady || wideOpen;
 
-    // ── DUNK RANGE ──────────────────────────────────────────────────
     if(dToHoop < DUNK_DIST && canShootNow && !cpu.dunking){
       if(Math.random() < 0.55){
         startCPUDunk(); return;
       } else {
         ball.x = cpu.handX||cpu.x-14; ball.y = cpu.handY||cpu.y-10;
-        launchArc('cpu', HOOP_L, Math.random() < 0.62 * ob * fireBonus, 2, 1.8, 75);
+        launchArc('cpu', HOOP_L, Math.random() < Math.min(0.98, 0.62 * ob * fireBonus * getCPUDiffMult()), 2, 1.8, 75);
         cpu.hasBall = false; cpu.shootTimer = 1.6 + Math.random()*1.2; return;
       }
     }
 
-    // ── LAYUP / PAINT (inside ~90) ───────────────────────────────────
     if(canShootNow && dToHoop <= 90){
       ball.x = cpu.handX||cpu.x-14; ball.y = cpu.handY||cpu.y-10;
-      launchArc('cpu', HOOP_L, Math.random() < 0.60 * ob * fireBonus, 2, 1.8, 80);
+      launchArc('cpu', HOOP_L, Math.random() < Math.min(0.98, 0.60 * ob * fireBonus * getCPUDiffMult()), 2, 1.8, 80);
       cpu.hasBall = false; cpu.shootTimer = 1.4 + Math.random()*1.0; return;
     }
 
-    // ── MID-RANGE (90-230) ────────────────────────────────────────────
     if(canShootNow && dToHoop > 90 && dToHoop <= THREE_DIST){
       ball.x = cpu.handX||cpu.x-14; ball.y = cpu.handY||cpu.y-10;
-      launchArc('cpu', HOOP_L, Math.random() < 0.50 * ob * fireBonus, 2, 1);
+      launchArc('cpu', HOOP_L, Math.random() < Math.min(0.98, 0.50 * ob * fireBonus * getCPUDiffMult()), 2, 1);
       cpu.hasBall = false; cpu.shootTimer = 1.6 + Math.random()*1.2; return;
     }
 
-    // ── THREE POINTER (230-290) ────────────────────────────────────────
     if(canShootNow && dToHoop > THREE_DIST && dToHoop <= 295){
       ball.x = cpu.handX||cpu.x-14; ball.y = cpu.handY||cpu.y-10;
-      launchArc('cpu', HOOP_L, Math.random() < 0.38 * ob * fireBonus, 3, 1);
+      launchArc('cpu', HOOP_L, Math.random() < Math.min(0.98, 0.38 * ob * fireBonus * getCPUDiffMult()), 3, 1);
       cpu.hasBall = false; cpu.shootTimer = 1.8 + Math.random()*1.4; return;
     }
 
-    // ── MOVEMENT: pick a spot to attack based on shot type CPU wants ─
-    // CPU randomly decides each possession what shot it wants to take
-    // shotSpot is picked fresh each time timer resets (encoded via shootTimer range)
-    // Wide open? Just shoot from where they are — don't drive unnecessarily
-    const wantsThree  = wideOpen ? (dToHoop > THREE_DIST) : (cpu.shootTimer > 2.5);
-    const wantsMid    = wideOpen ? (dToHoop > 90 && dToHoop <= THREE_DIST) : (cpu.shootTimer > 1.2 && cpu.shootTimer <= 2.5);
-    const wantsDrive  = wideOpen ? (dToHoop <= 90) : (cpu.shootTimer <= 1.2);
+    const wantsThree = wideOpen ? (dToHoop > THREE_DIST) : (cpu.shootTimer > 2.5);
+    const wantsMid   = wideOpen ? (dToHoop > 90 && dToHoop <= THREE_DIST) : (cpu.shootTimer > 1.2 && cpu.shootTimer <= 2.5);
 
     let targetDist;
-    if(wantsThree)       targetDist = THREE_DIST + 12;  // just behind the line
-    else if(wantsMid)    targetDist = 140 + Math.random()*50; // mid range variety
-    else                 targetDist = 72;               // drive to paint
+    if(wantsThree)     targetDist = THREE_DIST + 12;
+    else if(wantsMid)  targetDist = 140 + Math.random()*50;
+    else               targetDist = 72;
 
     const ang = Math.atan2(HOOP_L.y-cpu.y, HOOP_L.x-cpu.x);
     const waveY = Math.sin(cpu.walkT * 1.4) * 18;
 
     if(dToHoop > targetDist + 12){
-      // Drive toward spot
       tx = HOOP_L.x - Math.cos(ang)*targetDist + Math.cos(ang+Math.PI/2)*waveY;
       ty = HOOP_L.y + waveY;
       wantSprint = dToHoop > targetDist + 50;
     } else if(dToHoop < DUNK_DIST && cpu.shootTimer > 0){
-      // Too close, not ready — back out to mid
       tx = cpu.x - (HOOP_L.x-cpu.x)/Math.max(1,dToHoop)*50;
       ty = cpu.y + waveY;
     } else {
-      tx = cpu.x; ty = cpu.y; // hold spot, shoot is imminent
+      tx = cpu.x; ty = cpu.y;
     }
 
   } else if(ball.loose || ball.inFlight){
@@ -1540,7 +1699,8 @@ function updateCPU(dt){
     const hoopNX  = hoopDX / hoopLen;
     const hoopNY  = hoopDY / hoopLen;
 
-    const baseGap = pToHoop < 100 ? 26 : pToHoop < THREE_DIST ? 36 : 50;
+    const diffGapMult = gameDifficulty==='easy'?1.35 : gameDifficulty==='hard'?0.80 : gameDifficulty==='very_hard'?0.60 : 1.0;
+    const baseGap = (pToHoop < 100 ? 26 : pToHoop < THREE_DIST ? 36 : 50) * diffGapMult;
     const stillPress = Math.min(1, player.stillT / 2.5);
     const gap = Math.max(18, baseGap - stillPress * 14);
 
@@ -1581,17 +1741,15 @@ function updateCPU(dt){
       }
     }
 
-    // ── CPU DRIBBLE MOVES — random hezi/spin when player reaches ──────────
+    // CPU dribble moves
     if(!cpu.anklebroken) cpu.anklebroken=Math.max(0,(cpu.anklebroken||0)-dt);
-    // CPU occasionally does a move when player is close and reaching
-    if(!cpu.hasBall===false && cpu.hasBall && dToP < 90 && !cpu.dunking){
+    if(cpu.hasBall===false && dToP < 90 && !cpu.dunking){
       if(!cpu._moveCD) cpu._moveCD=0;
       cpu._moveCD-=dt;
       if(cpu._moveCD<=0 && Math.random()<0.008){
         const moveType=Math.random()<0.5?'hezi':'spin';
         cpu._moveCD=2.5+Math.random()*2;
         cpu._moveAnim=0.55; cpu._moveType=moveType;
-        // If player is actively reaching (stealAnim), ankle break them
         if(player.stealAnim>0){
           player.anklebroken=1.8; player.stealCD=3.0;
           sfxAnkle();
@@ -1610,13 +1768,13 @@ function updateCPU(dt){
       }
     }
 
-    // ── STEAL: give ball immediately on success (NO free throws) ──
     if(player.hasBall && cpu.stealCD <= 0 && dToP < 52){
       const handDist = Math.hypot(cpu.handX - player.handX, cpu.handY - player.handY);
+      const stealMult = gameDifficulty==='easy'?0.45 : gameDifficulty==='hard'?1.45 : gameDifficulty==='very_hard'?2.2 : 1.0;
 
       if(!cpu.anklebroken && player.stillT > 1.2 && handDist < 32){
         cpu.stealAnim = 0.4; cpu.stealCD = 2.8 + Math.random()*2;
-        if(Math.random() < 0.55){
+        if(Math.random() < 0.55 * stealMult){
           p2Steals++;
           pokeBallLoose(player, cpu.x<player.x?-1:1, 185);
           registerTurnover(1, 2, `${cpuName} PICKS YOUR POCKET! 😤`, 'SCRAMBLE!', true);
@@ -1627,10 +1785,10 @@ function updateCPU(dt){
       }
 
       if(!meterActive){
-        const chance = handDist < 16 ? 0.018 : handDist < 28 ? 0.008 : 0.002;
+        const chance = (handDist < 16 ? 0.018 : handDist < 28 ? 0.008 : 0.002) * stealMult;
         if(Math.random() < chance){
           cpu.stealAnim = 0.38; cpu.stealCD = 2.0 + Math.random()*2;
-          if(Math.random() < 0.40){
+          if(Math.random() < 0.40 * stealMult){
             p2Steals++;
             pokeBallLoose(player, cpu.x<player.x?-1:1, 160);
             registerTurnover(1, 2, `${cpuName} STRIPS IT! 💨`, 'SCRAMBLE!', true);
@@ -1640,12 +1798,10 @@ function updateCPU(dt){
       }
     }
 
-    // ── Removed shooting foul / FT — now just a reach-in that misses ──
-
-    // ── BLOCK ──
     if(ball.inFlight && ball.arcShooter === 'player' && !cpu.jumping && cpu.blockCD <= 0){
       const bd = dist(cpu, {x:ball.x, y:ball.y});
-      if(bd < 120 && Math.random() < 0.016){
+      const blockMult = gameDifficulty==='easy'?0.4 : gameDifficulty==='hard'?1.6 : gameDifficulty==='very_hard'?2.8 : 1.0;
+      if(bd < 120 && Math.random() < 0.016 * blockMult){
         cpu.jumping = true; cpu.jumpVel = -310; cpu.blockAnim = 0.7; cpu.blockCD = 2.5;
         if(ball.arcT < 0.68){
           ball.inFlight = false; ball.loose = true;
@@ -1654,7 +1810,6 @@ function updateCPU(dt){
           ball.trail = []; sfxBlock();
           flash(cpuName + " BLOCKS IT! ✋");
           announce("BLOCKED BY " + cpuName + "!!!");
-          // CPU gets ball on its own block
           setTimeout(()=>{
             if(ball.loose){
               registerTurnover(1, 2, `${cpuName} BLOCKS & GETS IT!`, 'TURNOVER — CPU BALL');
@@ -1693,9 +1848,14 @@ function updateCPU(dt){
 // PLAYER INPUT
 // ═══════════════════════════════════════════
 function updatePlayer(dt){
-  // Frozen during checkup
   if(checkupActive && (checkupPhase==='frozen' || checkupPhase==='throw')){
-    player.walkT=0; return;
+    // During CPU-holds checkup (player is attacker), player can move
+    // During Player-holds checkup (cpu is attacker), player holds ball — frozen
+    if(checkupBallHolder === 1){
+      // Player holds ball for CPU — player is frozen
+      player.walkT=0; return;
+    }
+    // Otherwise (checkupBallHolder===2, player is attacker) player can move around
   }
   let mx=0,my=0;
   if(held('KeyW')||held('ArrowUp')) my=-1;
@@ -1704,7 +1864,6 @@ function updatePlayer(dt){
   if(held('KeyD')||held('ArrowRight')) mx=1;
 
   const sp=sprinting()&&(mx||my);
-  // Player stamina drain/regen
   if(sp&&(mx||my)){ player.stamina=Math.max(0,player.stamina-dt*(22/getStaminaMult())); }
   else { player.stamina=Math.min(100,player.stamina+dt*(18*getStaminaMult())); }
   player.sprinting=sp&&player.stamina>5;
@@ -1755,7 +1914,7 @@ function updatePlayer(dt){
 
   if(player.shootPose){ player.poseT+=dt; if(player.poseT>0.85) player.shootPose=false; }
 
-  // ── DRIBBLE MOVES (Z=Hezi, X=Spin) ─────────────────────────────────────────
+  // ── DRIBBLE MOVES ──────────────────────────────────────────
   if(player.moveAnim>0) player.moveAnim-=dt;
   if(player.moveCooldown>0) player.moveCooldown-=dt;
   if(player.anklebroken>0) player.anklebroken-=dt;
@@ -1764,26 +1923,21 @@ function updatePlayer(dt){
     const cpuClose = dist(player,cpu)<110;
 
     if(fresh('KeyZ')){
-      // HEZI — stutter-step: freeze, fake left/right, burst opposite
-      const faceDir = player.vx>=0 ? 1 : -1; // which way player was moving
+      const faceDir = player.vx>=0 ? 1 : -1;
       player.moveAnim=0.65; player.moveType='hezi'; player.moveCooldown=1.8;
       player.heziDir=faceDir; player.heziPhase=0;
       sfxHezi();
       flash('HEZI! 🪄');
       announce(`${playerName} WITH THE HESITATION!`);
-      // Short freeze then burst — handled via heziPhase timer in updatePlayer
-      player.vx=0; player.vy=0; // freeze for fake
-      // Schedule burst after fake window (0.18s)
+      player.vx=0; player.vy=0;
       setTimeout(()=>{
         if(player.moveType==='hezi'){
           player.heziPhase=1;
-          // Burst in current input direction or opposite of fake
           const burstDir = (mx!==0) ? mx : -faceDir;
           player.vx=burstDir*P_SPRINT*1.1;
           player.vy=(my||0)*P_SPRINT*0.5;
         }
       }, 180);
-      // If CPU is close and reaching, ankle break them
       if(cpuClose && cpu.stealAnim>0){
         cpu.anklebroken=1.8; cpu.stealCD=3.5;
         sfxAnkle();
@@ -1794,17 +1948,14 @@ function updatePlayer(dt){
     }
 
     if(fresh('KeyX')){
-      // SPIN MOVE — player turns away, burst
       player.moveAnim=0.55; player.moveType='spin'; player.moveCooldown=2.0;
-      player.spinAngleDeg=0; // will increment each frame
+      player.spinAngleDeg=0;
       sfxSpin();
       flash('SPIN! 🔄');
       announce(`${playerName} WITH THE SPIN MOVE!`);
-      // Burst in facing direction
       const ang = Math.atan2(cpu.y-player.y, cpu.x-player.x);
       player.vx += Math.cos(ang+Math.PI)*P_SPRINT*0.8;
       player.vy += Math.sin(ang+Math.PI)*P_SPRINT*0.5;
-      // If CPU close and reaching → ankle break
       if(cpuClose && cpu.stealAnim>0){
         cpu.anklebroken=2.0; cpu.stealCD=4.0;
         sfxAnkle();
@@ -1815,16 +1966,15 @@ function updatePlayer(dt){
     }
   }
 
-  // If player is ankle-broken — slow them significantly
   if(player.anklebroken>0&&!player.hasBall){
     player.vx*=0.6; player.vy*=0.6;
   }
 
-  // ── STEAL (Q) — give ball immediately, no free throws ──
+  // ── STEAL ──
   if(fresh('KeyQ')&&player.stealCD<=0&&!player.dunking){
     player.stealAnim=0.35;
     const d=dist(player,cpu);
-    const defBonus=getDefenseBonus(); // from stat upgrade
+    const defBonus=getDefenseBonus();
     if(cpu.hasBall){
       const hd=Math.hypot(player.handX-cpu.x,player.handY-cpu.y);
       if(hd<22+defBonus*8){
@@ -1852,7 +2002,7 @@ function updatePlayer(dt){
     } else flash('NO BALL TO STEAL');
   }
 
-  // ── DUNK / BLOCK (Space) ──
+  // ── DUNK / BLOCK ──
   if(fresh('Space')){
     if(player.hasBall){
       if(canDunk()) startDunk();
@@ -1879,7 +2029,6 @@ function updatePlayer(dt){
               ball.trail=[]; sfxBlock();
               flash('BLOCKED! ✋🔥');
               announce(`BLOCKED BY ${playerName}!!!`);
-              // Player gets ball after their block
               setTimeout(()=>{
                 if(ball.loose){
                   registerTurnover(2, 1, `${playerName} BLOCKS IT! ✋`, 'TURNOVER — YOUR BALL');
@@ -1927,11 +2076,10 @@ function spawnDunkParticles(px,py){
 function updateParticles(dt){
   particles=particles.filter(p=>{
     p.x+=p.vx*dt; p.y+=p.vy*dt;
-    // smoke/glow clouds: low gravity + drag; regular: normal gravity
     const isCloud = p.r > 8;
     p.vy += (isCloud ? 40 : 220)*dt;
     p.vx *= isCloud ? 0.97 : 1;
-    p.life-=dt*(isCloud?0.85:1.4); 
+    p.life-=dt*(isCloud?0.85:1.4);
     return p.life>0;
   });
 }
@@ -2056,54 +2204,40 @@ function drawHoop(h,fl){
   const out=fl?1:-1, side=fl?'R':'L', net=nets[side];
   const through=Math.max(0,net.through), sway=net.sway*5;
 
-  // ── BACKBOARD — flat against the wall ───────────────────────────
-  // Wall itself (behind backboard)
   ctx.fillStyle='#111';
   ctx.fillRect(h.x+out*28-2, h.y-55, out>0?W:0+4, 110);
 
-  // Backboard: tall rectangle flush to wall
   const bbX = h.x+out*26;
   const bbW = 8, bbH = 80;
   ctx.fillStyle='rgba(55,58,70,0.97)';
   ctx.strokeStyle='#555';ctx.lineWidth=2;
   ctx.fillRect(bbX-bbW/2, h.y-bbH/2, bbW, bbH);
   ctx.strokeRect(bbX-bbW/2, h.y-bbH/2, bbW, bbH);
-  // Orange target box on backboard
   ctx.strokeStyle='rgba(255,80,0,.55)';ctx.lineWidth=1.5;
   ctx.strokeRect(bbX-bbW/2+1.5, h.y-14, bbW-3, 26);
 
-  // ── SUPPORT ARM ──────────────────────────────────────────────────
   const rimCX = h.x;
   const rimCY = h.y;
   ctx.strokeStyle='#777';ctx.lineWidth=3;ctx.lineCap='butt';
   ctx.beginPath();ctx.moveTo(bbX+out*(-bbW/2), rimCY);ctx.lineTo(rimCX, rimCY);ctx.stroke();
 
-  // ── RIM geometry ─────────────────────────────────────────────────
-  // Real rim viewed from slightly above: an ellipse
-  // rx=radius of rim, ry=perspective crush (smaller = more top-down)
   const rx=26, ry=9;
 
-  // Back arc of rim (darker, drawn first so net goes on top)
   ctx.save();
   ctx.beginPath();
-  // back = top half of ellipse (y goes up = negative direction)
-  ctx.ellipse(rimCX+sway, rimCY, rx, ry, 0, Math.PI, 0, true); // counterclockwise top arc
+  ctx.ellipse(rimCX+sway, rimCY, rx, ry, 0, Math.PI, 0, true);
   ctx.strokeStyle='#992200';
   ctx.lineWidth=5;
   ctx.stroke();
   ctx.restore();
 
-  // ── NET hanging from rim ─────────────────────────────────────────
   const netTop = rimCY + ry;
   const netBot = rimCY + 28 + through*12;
   const nSegs  = 10;
   for(let i=0;i<=nSegs;i++){
     const t    = i/nSegs;
-    const ang  = Math.PI*2 - t*Math.PI; // bottom half of ellipse, sweeping around
-    // attach point on the bottom arc of the rim ellipse
     const tx2  = rimCX+sway + Math.cos(Math.PI+t*Math.PI)*rx;
     const ty2  = rimCY      + Math.sin(Math.PI+t*Math.PI)*ry;
-    // bottom of net strands converge inward
     const bx2  = rimCX+sway + Math.cos(Math.PI+t*Math.PI)*rx*0.28;
     const by2  = netBot + through*Math.sin(Math.PI*t)*10;
     ctx.strokeStyle=`rgba(215,215,215,${0.18+through*0.50})`;
@@ -2119,14 +2253,12 @@ function drawHoop(h,fl){
     ctx.beginPath();ctx.moveTo(rimCX+sway-rw,ry2);ctx.lineTo(rimCX+sway+rw,ry2);ctx.stroke();
   }
 
-  // Front arc of rim (bright orange, drawn on top of net)
   ctx.save();
   ctx.beginPath();
-  ctx.ellipse(rimCX+sway, rimCY, rx, ry, 0, 0, Math.PI); // bottom/front arc
+  ctx.ellipse(rimCX+sway, rimCY, rx, ry, 0, 0, Math.PI);
   ctx.strokeStyle='#ff4400';
   ctx.lineWidth=5;
   ctx.stroke();
-  // subtle highlight sheen
   ctx.beginPath();
   ctx.ellipse(rimCX+sway, rimCY-1, rx-2, ry-2, 0, 0.05, Math.PI-0.05);
   ctx.strokeStyle='rgba(255,160,60,.3)';
@@ -2151,28 +2283,18 @@ function drawChar(e, hasB){
   const ssc=Math.max(0.3,1+jo/80);
   const isSpr=isP?(sprinting()&&(Math.abs(player.vx)>8||Math.abs(player.vy)>8))
                   :(cpu.sprinting&&(Math.abs(cpu.vx)>8||Math.abs(cpu.vy)>8));
-  // ── DRIBBLE MOVE ANIMATIONS ──────────────────────────────────────
-  // Spin: player turns sideways (scaleX shrinks to 0 then back) — like turning body
   const doSpin = isP && player.moveType==='spin' && player.moveAnim>0;
-  // Advance spin angle
   if(doSpin) player.spinAngleDeg = Math.min(180, player.spinAngleDeg + 520*(1/60));
-  // scaleX: 1 → 0 (turning away) → back to 1 (facing forward again)
   const spinProg = doSpin ? (player.spinAngleDeg/180) : 0;
   const spinScaleX = doSpin ? Math.abs(Math.cos(spinProg*Math.PI)) : 1;
 
-  // Hezi: body rocks left then right — upper body lean only, legs stay
   const doHezi = isP && player.moveType==='hezi' && player.moveAnim>0;
-  const heziProg = doHezi ? (1 - player.moveAnim/0.65) : 0; // 0→1 over animation
-  // Phase 0 (0-0.28): lean in fake direction, Phase 1 (0.28-1): snap opposite + burst
+  const heziProg = doHezi ? (1 - player.moveAnim/0.65) : 0;
   const heziPhase0 = heziProg < 0.28;
   const fakeDir = player.heziDir || 1;
-  // Upper body offset: fake lean then snap back hard
   const heziBodyX = doHezi
-    ? (heziPhase0
-        ? fakeDir * 10 * (heziProg/0.28)           // lean in fake direction
-        : -fakeDir * 8 * ((heziProg-0.28)/0.72))   // snap back
+    ? (heziPhase0 ? fakeDir * 10 * (heziProg/0.28) : -fakeDir * 8 * ((heziProg-0.28)/0.72))
     : 0;
-  // Head bob — quick dip down then up on burst
   const heziHeadY = doHezi && !heziPhase0 ? -5*(1-((heziProg-0.28)/0.72)) : 0;
   ctx.fillStyle='rgba(0,0,0,.3)';
   ctx.beginPath();ctx.ellipse(e.x,e.y+20,11*ssc,3.5*ssc,0,0,Math.PI*2);ctx.fill();
@@ -2188,7 +2310,6 @@ function drawChar(e, hasB){
   ctx.fillStyle=isP?'#ddd':'#111';
   ctx.beginPath();ctx.ellipse(e.x-3+ls*.38-def,ey+23+crouchY,4.5,2.5,ls*.03,0,Math.PI*2);ctx.fill();
   ctx.beginPath();ctx.ellipse(e.x+3-ls*.38+def,ey+23+crouchY,4.5,2.5,-ls*.03,0,Math.PI*2);ctx.fill();
-  // Hezi: offset upper body (jersey+head) while legs stay
   const bodyOffX = doHezi ? heziBodyX : 0;
   ctx.fillStyle=e.color;
   ctx.beginPath();
@@ -2211,7 +2332,6 @@ function drawChar(e, hasB){
   ctx.fillStyle='rgba(255,255,255,.8)';
   ctx.font=`bold ${nm2.length>1?'6.5':'8.5'}px Barlow Condensed`;
   ctx.textAlign='center';ctx.fillText('#'+nm2,jerseyX||e.x,ey+4+crouchY);
-  // Head: hezi moves head with body + bob; spin stays upright (no turn)
   const headX = e.x + bodyOffX;
   const headY = ey-32 + (doHezi ? heziHeadY : 0);
   const skin=e.skinColor;
@@ -2265,7 +2385,6 @@ function drawChar(e, hasB){
   ctx.fillStyle=e.skinColor;ctx.beginPath();ctx.arc(e.x,ey-18,8.5,0,Math.PI*2);ctx.fill();
   ctx.strokeStyle=isP?'#ff6600':'#fff';ctx.lineWidth=1.8;
   ctx.beginPath();ctx.arc(e.x,ey-18,8.5,Math.PI*1.15,Math.PI*1.85);ctx.stroke();
-  // (spin transform already closed after body, hezi uses offset not save/restore)
   ctx.fillStyle='rgba(0,0,0,.72)';ctx.font='bold 7.5px Russo One';ctx.textAlign='center';
   const nm3=isP?playerName:cpuName, ntw=ctx.measureText(nm3).width+8;
   ctx.fillRect(e.x-ntw/2,ey-34,ntw,11);
@@ -2340,7 +2459,6 @@ function drawBallAt(bx2,by2,spin){
     ctx.save();ctx.globalAlpha=0.5;ctx.fillStyle='#ff4400';
     ctx.beginPath();ctx.arc(bx2-3,by2-3,ball.r*0.7,0,Math.PI*2);ctx.fill();ctx.restore();
   }
-  // Ball skin color
   let bColor = (typeof activeBallColor!=='undefined') ? activeBallColor : '#e87722';
   if(bColor==='rainbow'){
     const rg=ctx.createRadialGradient(bx2,by2,0,bx2,by2,ball.r);
@@ -2461,7 +2579,6 @@ function drawOpennessLabel(){
 }
 
 function drawDribbleMoveVFX(){
-  // Player spin — draw rotation ring
   if(player.moveAnim>0 && player.moveType==='spin'){
     const prog=1-player.moveAnim/0.6;
     const r=18+prog*22;
@@ -2471,7 +2588,6 @@ function drawDribbleMoveVFX(){
     ctx.beginPath();
     ctx.arc(player.x, player.y+player.jumpOff, r, -Math.PI/2, -Math.PI/2+prog*Math.PI*2);
     ctx.stroke();
-    // trail particles
     if(Math.random()<0.5) particles.push({
       x:player.x+(Math.random()-.5)*r*2, y:player.y+player.jumpOff+(Math.random()-.5)*r,
       vx:(Math.random()-.5)*60, vy:-30-Math.random()*40,
@@ -2479,7 +2595,6 @@ function drawDribbleMoveVFX(){
     });
     ctx.restore();
   }
-  // Player hezi — quick side flash
   if(player.moveAnim>0 && player.moveType==='hezi'){
     const a=player.moveAnim/0.55;
     ctx.save();
@@ -2491,7 +2606,6 @@ function drawDribbleMoveVFX(){
     ctx.stroke();
     ctx.restore();
   }
-  // CPU move anim
   if((cpu._moveAnim||0)>0){
     cpu._moveAnim=Math.max(0,(cpu._moveAnim||0)-0.016);
     const a=cpu._moveAnim/0.55;
@@ -2507,12 +2621,10 @@ function drawDribbleMoveVFX(){
 }
 
 function drawAnkleBroken(){
-  // Player ankle broken — red zig-zag under feet + text
   if(player.anklebroken>0){
     const a=Math.min(1,player.anklebroken);
     ctx.save();
     ctx.globalAlpha=a;
-    // Stars around feet
     for(let i=0;i<5;i++){
       const ang=Math.PI*2*(i/5)+Date.now()*0.004;
       const px=player.x+Math.cos(ang)*18, py=player.y+12+Math.sin(ang)*8;
@@ -2520,13 +2632,11 @@ function drawAnkleBroken(){
       ctx.font='10px sans-serif'; ctx.textAlign='center';
       ctx.fillText('⭐',px,py);
     }
-    // ANKLE BROKEN text
     ctx.font='bold 10px Russo One'; ctx.textAlign='center';
     ctx.fillStyle='#ff4444';
     ctx.fillText('ANKLE BROKEN',player.x,player.y+(player.jumpOff||0)-42);
     ctx.restore();
   }
-  // CPU ankle broken
   if(cpu.anklebroken>0){
     const a=Math.min(1,cpu.anklebroken);
     ctx.save(); ctx.globalAlpha=a;
@@ -2607,13 +2717,11 @@ function drawStaminaBar(e, isCpu){
   const pct=st/100;
   const col=pct>0.6?'#22cc44':pct>0.35?'#ff8800':'#ff2200';
   ctx.fillStyle=col;ctx.fillRect(bx2,by2,bw*pct,bh);
-  // glow on low stamina
   if(pct<0.35){
     ctx.save();ctx.shadowColor=col;ctx.shadowBlur=6;
     ctx.fillRect(bx2,by2,bw*pct,bh);ctx.restore();
   }
   ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1;ctx.strokeRect(bx2,by2,bw,bh);
-  // label
   ctx.save();ctx.font='bold 6px Russo One';ctx.textAlign='left';
   ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillText('STA',bx2,by2-2);ctx.restore();
   if(st<22){ ctx.fillStyle='#ff4444';ctx.font='bold 7px Russo One';ctx.textAlign='center'; ctx.fillText('GASSED',e.x,by2-2); }
@@ -2630,21 +2738,14 @@ function drawCheckupOverlay(){
   ctx.strokeStyle=`rgba(255,100,0,${0.3+0.2*pulse})`;ctx.lineWidth=2;ctx.setLineDash([6,6]);
   ctx.beginPath();ctx.arc(W/2,H/2,48,0,Math.PI*2);ctx.stroke();
   ctx.setLineDash([]);ctx.restore();
-  if(checkupBallHolder===2){
-    const pDistToHalf=Math.abs(player.x-W/2);
-    if(pDistToHalf>100){
-      const angle=Math.atan2(H/2-player.y,W/2-player.x);
-      const ax=player.x+Math.cos(angle)*50, ay=player.y+Math.sin(angle)*50;
-      ctx.save();ctx.globalAlpha=0.7+0.25*Math.sin(Date.now()*0.007);
-      ctx.strokeStyle='#ff6600';ctx.lineWidth=2.5;ctx.lineCap='round';
-      ctx.beginPath();ctx.moveTo(player.x+Math.cos(angle)*28,player.y+Math.sin(angle)*28);ctx.lineTo(ax,ay);ctx.stroke();
-      ctx.fillStyle='#ff6600';ctx.beginPath();
-      ctx.moveTo(ax,ay);
-      ctx.lineTo(ax+Math.cos(angle-2.5)*9,ay+Math.sin(angle-2.5)*9);
-      ctx.lineTo(ax+Math.cos(angle+2.5)*9,ay+Math.sin(angle+2.5)*9);
-      ctx.closePath();ctx.fill();ctx.restore();
-    }
-  }
+
+  // Draw WINNERS BALL label at center
+  ctx.save();
+  ctx.font='bold 9px Russo One';ctx.textAlign='center';
+  const winLabel = possessionTeam===1 ? `🏆 ${playerName} BALL` : `🏆 ${cpuName} BALL`;
+  ctx.fillStyle='rgba(255,200,0,.85)';
+  ctx.fillText(winLabel, W/2, H/2 - 60);
+  ctx.restore();
 }
 
 // ═══════════════════════════════════════════
@@ -2728,7 +2829,6 @@ function gameLoop(ts){
 
   if(player.hasBall||cpu.hasBall) ball.spinAngle+=2.5*dt;
 
-  // DRAW
   ctx.clearRect(0,0,W,H);
   drawStands();
   drawFans();
@@ -2759,6 +2859,33 @@ function gameLoop(ts){
 }
 
 // ═══════════════════════════════════════════
+// JUMP BALL LOOP (runs before game starts)
+// ═══════════════════════════════════════════
+function jumpBallLoop(ts){
+  if(!jumpBallActive) return;
+  const dt = Math.min((ts - lastTS) / 1000, 0.05);
+  lastTS = ts;
+
+  // Poll Space key for jump ball — must happen here since gameRunning=false
+  if(fresh('Space') || fresh('KeyW') || fresh('ArrowUp')){
+    jumpBallPlayerJump();
+  }
+
+  updateJumpBall(dt);
+
+  // Still render court in background
+  ctx.clearRect(0,0,W,H);
+  drawStands();
+  drawFans();
+  drawCourt();
+  updateFans(dt);
+  updateParticles(dt);
+  drawParticles();
+
+  if(jumpBallActive) requestAnimationFrame(jumpBallLoop);
+}
+
+// ═══════════════════════════════════════════
 // MENU / SAVE / LOAD
 // ═══════════════════════════════════════════
 document.getElementById('inp-num').addEventListener('input',()=>{
@@ -2779,42 +2906,38 @@ function loadProfile(){
 function getRecord(){ try{return{w:parseInt(localStorage.getItem('jam_w')||'0'),l:parseInt(localStorage.getItem('jam_l')||'0')};}catch(e){return{w:0,l:0};} }
 function saveRecord(win){ try{const r=getRecord();if(win)localStorage.setItem('jam_w',r.w+1);else localStorage.setItem('jam_l',r.l+1);}catch(e){} }
 
-
 // ═══════════════════════════════════════════════════════════════
-// TC CURRENCY + SHOP + INVENTORY SYSTEM
+// TC CURRENCY + SHOP + INVENTORY
 // ═══════════════════════════════════════════════════════════════
-
-// ── CATALOG ─────────────────────────────────────────────────────
 const CATALOG = {
   vfx: [
-    { id:'vfx_fire_trail',    name:'FIRE TRAIL',      icon:'🔥', desc:'Blaze behind every move',     price:120 },
-    { id:'vfx_lightning',     name:'LIGHTNING',        icon:'⚡', desc:'Electric sparks on dunks',    price:180 },
-    { id:'vfx_ice',           name:'ICY COLD',         icon:'🧊', desc:'Frozen aura when you hit green', price:150 },
-    { id:'vfx_purple_haze',   name:'PURPLE HAZE',      icon:'💜', desc:'Purple smoke on every shot',  price:200 },
-    { id:'vfx_golden_hour',   name:'GOLDEN HOUR',      icon:'✨', desc:'Gold shimmer on fire streak', price:250 },
-    { id:'vfx_storm',         name:'STORM MODE',       icon:'🌩️', desc:'Thunder rings on dunks',      price:300 },
+    { id:'vfx_fire_trail',  name:'FIRE TRAIL',   icon:'🔥', desc:'Blaze behind every move',        price:120 },
+    { id:'vfx_lightning',   name:'LIGHTNING',     icon:'⚡', desc:'Electric sparks on dunks',       price:180 },
+    { id:'vfx_ice',         name:'ICY COLD',      icon:'🧊', desc:'Frozen aura when you hit green', price:150 },
+    { id:'vfx_purple_haze', name:'PURPLE HAZE',   icon:'💜', desc:'Purple smoke on every shot',     price:200 },
+    { id:'vfx_golden_hour', name:'GOLDEN HOUR',   icon:'✨', desc:'Gold shimmer on fire streak',    price:250 },
+    { id:'vfx_storm',       name:'STORM MODE',    icon:'🌩️', desc:'Thunder rings on dunks',         price:300 },
   ],
   jerseys: [
-    { id:'jer_default',  name:'OG BLUE',      icon:'🔵', desc:'Classic starter kit',     price:0,   color:'#1a8fff', free:true },
-    { id:'jer_red',      name:'HOT SAUCE',    icon:'🔴', desc:'Red heat edition',         price:80,  color:'#dd1111' },
-    { id:'jer_green',    name:'MONEY GREEN',  icon:'💚', desc:'Dripping in guap',         price:80,  color:'#11aa44' },
-    { id:'jer_purple',   name:'ROYAL',        icon:'💜', desc:'Purple reign',             price:100, color:'#7722cc' },
-    { id:'jer_black',    name:'BLACKOUT',     icon:'⚫', desc:'Dark mode activated',      price:120, color:'#222222' },
-    { id:'jer_gold',     name:'GOLD CHAIN',   icon:'🟡', desc:'Drip different',           price:200, color:'#cc9900' },
-    { id:'jer_pink',     name:'FLAMINGO',     icon:'🩷', desc:'Pretty AND deadly',         price:150, color:'#ee44aa' },
-    { id:'jer_white',    name:'ALL WHITE',    icon:'⬜', desc:'Fresh out the box',         price:100, color:'#dddddd' },
+    { id:'jer_default', name:'OG BLUE',     icon:'🔵', desc:'Classic starter kit',    price:0,   color:'#1a8fff', free:true },
+    { id:'jer_red',     name:'HOT SAUCE',   icon:'🔴', desc:'Red heat edition',        price:80,  color:'#dd1111' },
+    { id:'jer_green',   name:'MONEY GREEN', icon:'💚', desc:'Dripping in guap',        price:80,  color:'#11aa44' },
+    { id:'jer_purple',  name:'ROYAL',       icon:'💜', desc:'Purple reign',            price:100, color:'#7722cc' },
+    { id:'jer_black',   name:'BLACKOUT',    icon:'⚫', desc:'Dark mode activated',     price:120, color:'#222222' },
+    { id:'jer_gold',    name:'GOLD CHAIN',  icon:'🟡', desc:'Drip different',          price:200, color:'#cc9900' },
+    { id:'jer_pink',    name:'FLAMINGO',    icon:'🩷', desc:'Pretty AND deadly',        price:150, color:'#ee44aa' },
+    { id:'jer_white',   name:'ALL WHITE',   icon:'⬜', desc:'Fresh out the box',        price:100, color:'#dddddd' },
   ],
   balls: [
-    { id:'ball_default', name:'CLASSIC',      icon:'🟠', desc:'Standard issue',           price:0,   ballColor:'#e87722', free:true },
-    { id:'ball_red',     name:'FIRE BALL',    icon:'🔴', desc:'Red hot',                  price:80,  ballColor:'#dd2200' },
-    { id:'ball_black',   name:'SHADOW',       icon:'⚫', desc:'Stealth mode',             price:100, ballColor:'#1a1a1a' },
-    { id:'ball_gold',    name:'GOLDEN',       icon:'🌕', desc:'Worth every TC',           price:180, ballColor:'#ccaa00' },
-    { id:'ball_rainbow', name:'RAINBOW',      icon:'🌈', desc:'Too wavy to guard',        price:250, ballColor:'rainbow' },
-    { id:'ball_galaxy',  name:'GALAXY',       icon:'🌌', desc:'Out of this world',        price:300, ballColor:'#4400aa' },
+    { id:'ball_default', name:'CLASSIC',  icon:'🟠', desc:'Standard issue',  price:0,   ballColor:'#e87722', free:true },
+    { id:'ball_red',     name:'FIRE BALL',icon:'🔴', desc:'Red hot',         price:80,  ballColor:'#dd2200' },
+    { id:'ball_black',   name:'SHADOW',   icon:'⚫', desc:'Stealth mode',    price:100, ballColor:'#1a1a1a' },
+    { id:'ball_gold',    name:'GOLDEN',   icon:'🌕', desc:'Worth every TC',  price:180, ballColor:'#ccaa00' },
+    { id:'ball_rainbow', name:'RAINBOW',  icon:'🌈', desc:'Too wavy to guard',price:250,ballColor:'rainbow' },
+    { id:'ball_galaxy',  name:'GALAXY',   icon:'🌌', desc:'Out of this world',price:300,ballColor:'#4400aa' },
   ],
 };
 
-// ── PERSISTENCE ─────────────────────────────────────────────────
 function getTC(){ try{ return parseInt(localStorage.getItem('jam_tc')||'0'); } catch(e){ return 0; } }
 function setTC(v){ try{ localStorage.setItem('jam_tc',String(Math.max(0,v))); } catch(e){} }
 function getOwned(){ try{ return JSON.parse(localStorage.getItem('jam_owned')||'["jer_default","ball_default"]'); } catch(e){ return ['jer_default','ball_default']; } }
@@ -2824,20 +2947,9 @@ function getEquipped(){
   catch(e){ return {vfx:[],jersey:'jer_default',ball:'ball_default'}; } 
 }
 function setEquipped(eq){ try{ localStorage.setItem('jam_equipped',JSON.stringify(eq)); } catch(e){} }
+function earnTC(amount){ const cur=getTC(); setTC(cur+amount); refreshTCDisplay(); setTimeout(saveUserData,500); }
+function refreshTCDisplay(){ const el=document.getElementById('tc-display'); if(el) el.textContent=getTC().toLocaleString(); }
 
-function earnTC(amount){
-  const cur = getTC();
-  setTC(cur + amount);
-  refreshTCDisplay();
-  setTimeout(saveUserData, 500); // async save to Supabase
-}
-
-function refreshTCDisplay(){
-  const el = document.getElementById('tc-display');
-  if(el) el.textContent = getTC().toLocaleString();
-}
-
-// ── TAB SWITCHING ────────────────────────────────────────────────
 let currentTab = 'play';
 function switchTab(tab){
   currentTab = tab;
@@ -2853,13 +2965,9 @@ function switchTab(tab){
   if(tab==='stats') renderStats();
 }
 
-// ── SHOP RENDER ──────────────────────────────────────────────────
 function renderShop(){
-  const owned = getOwned();
-  const tc = getTC();
+  const owned = getOwned(), tc = getTC();
   ['vfx','jerseys','balls'].forEach(cat=>{
-    const key = cat==='jerseys'?'jerseys':cat==='balls'?'balls':'vfx';
-    const catKey = cat==='jerseys'?'jerseys':cat==='balls'?'balls':'vfx';
     const items = CATALOG[cat==='jerseys'?'jerseys':cat==='balls'?'balls':'vfx'];
     const el = document.getElementById('shop-'+cat);
     if(!el) return;
@@ -2869,12 +2977,10 @@ function renderShop(){
       const canAfford = tc >= item.price;
       const div = document.createElement('div');
       div.className = 'shop-item' + (isOwned?' owned':'') + (!isOwned&&!canAfford?' cant-afford':'');
-      div.innerHTML = `
-        <div class="shop-item-icon">${item.icon}</div>
+      div.innerHTML = `<div class="shop-item-icon">${item.icon}</div>
         <div class="shop-item-name">${item.name}</div>
         <div class="shop-item-desc">${item.desc}</div>
-        <div class="shop-item-price ${isOwned?'owned-label':''}">${isOwned?'✓ OWNED':item.price===0?'FREE':item.price+' TC'}</div>
-      `;
+        <div class="shop-item-price ${isOwned?'owned-label':''}">${isOwned?'✓ OWNED':item.price===0?'FREE':item.price+' TC'}</div>`;
       if(!isOwned && canAfford) div.onclick = ()=>buyItem(item, cat);
       el.appendChild(div);
     });
@@ -2888,18 +2994,12 @@ function buyItem(item, cat){
   const owned = getOwned();
   if(!owned.includes(item.id)) owned.push(item.id);
   setOwned(owned);
-  refreshTCDisplay();
-  renderShop();
-  // Small flash
+  refreshTCDisplay(); renderShop();
   flash(`PURCHASED: ${item.name}! 🛒`);
 }
 
-// ── INVENTORY RENDER ─────────────────────────────────────────────
 function renderInventory(){
-  const owned = getOwned();
-  const eq = getEquipped();
-
-  // VFX
+  const owned = getOwned(), eq = getEquipped();
   const vfxEl = document.getElementById('inv-vfx');
   if(vfxEl){
     const ownedVfx = CATALOG.vfx.filter(v=>owned.includes(v.id));
@@ -2911,18 +3011,14 @@ function renderInventory(){
         const isEq = eq.vfx.includes(item.id);
         const div = document.createElement('div');
         div.className = 'inv-item' + (isEq?' equipped':'');
-        div.innerHTML = `
-          <div class="inv-item-icon">${item.icon}</div>
+        div.innerHTML = `<div class="inv-item-icon">${item.icon}</div>
           <div class="inv-item-name">${item.name}</div>
-          <div class="inv-item-equip">${isEq?'✓ ON':'EQUIP'}</div>
-        `;
+          <div class="inv-item-equip">${isEq?'✓ ON':'EQUIP'}</div>`;
         div.onclick = ()=>toggleEquipVFX(item.id);
         vfxEl.appendChild(div);
       });
     }
   }
-
-  // Jerseys
   const jerEl = document.getElementById('inv-jerseys');
   if(jerEl){
     const ownedJers = CATALOG.jerseys.filter(j=>owned.includes(j.id)||j.free);
@@ -2932,17 +3028,13 @@ function renderInventory(){
       const div = document.createElement('div');
       div.className = 'inv-item' + (isEq?' equipped':'');
       div.style.borderColor = isEq ? item.color : '';
-      div.innerHTML = `
-        <div class="inv-item-icon" style="color:${item.color}">${item.icon}</div>
+      div.innerHTML = `<div class="inv-item-icon" style="color:${item.color}">${item.icon}</div>
         <div class="inv-item-name">${item.name}</div>
-        <div class="inv-item-equip" style="color:${isEq?item.color:'#555'}">${isEq?'✓ ON':'EQUIP'}</div>
-      `;
+        <div class="inv-item-equip" style="color:${isEq?item.color:'#555'}">${isEq?'✓ ON':'EQUIP'}</div>`;
       div.onclick = ()=>equipJersey(item.id);
       jerEl.appendChild(div);
     });
   }
-
-  // Balls
   const ballEl = document.getElementById('inv-balls');
   if(ballEl){
     const ownedBalls = CATALOG.balls.filter(b=>owned.includes(b.id)||b.free);
@@ -2951,66 +3043,39 @@ function renderInventory(){
       const isEq = eq.ball === item.id;
       const div = document.createElement('div');
       div.className = 'inv-item' + (isEq?' equipped':'');
-      div.innerHTML = `
-        <div class="inv-item-icon">${item.icon}</div>
+      div.innerHTML = `<div class="inv-item-icon">${item.icon}</div>
         <div class="inv-item-name">${item.name}</div>
-        <div class="inv-item-equip">${isEq?'✓ ON':'EQUIP'}</div>
-      `;
+        <div class="inv-item-equip">${isEq?'✓ ON':'EQUIP'}</div>`;
       div.onclick = ()=>equipBall(item.id);
       ballEl.appendChild(div);
     });
   }
 }
 
-function toggleEquipVFX(id){
-  const eq = getEquipped();
-  const idx = eq.vfx.indexOf(id);
-  if(idx>=0) eq.vfx.splice(idx,1); else eq.vfx.push(id);
-  setEquipped(eq);
-  renderInventory();
-  applyCosmetics();
-}
-function equipJersey(id){
-  const eq = getEquipped(); eq.jersey=id; setEquipped(eq);
-  renderInventory(); applyCosmetics();
-}
-function equipBall(id){
-  const eq = getEquipped(); eq.ball=id; setEquipped(eq);
-  renderInventory(); applyCosmetics();
-}
+function toggleEquipVFX(id){ const eq=getEquipped(); const idx=eq.vfx.indexOf(id); if(idx>=0) eq.vfx.splice(idx,1); else eq.vfx.push(id); setEquipped(eq); renderInventory(); applyCosmetics(); }
+function equipJersey(id){ const eq=getEquipped(); eq.jersey=id; setEquipped(eq); renderInventory(); applyCosmetics(); }
+function equipBall(id){ const eq=getEquipped(); eq.ball=id; setEquipped(eq); renderInventory(); applyCosmetics(); }
 
-// ── APPLY COSMETICS → game state ────────────────────────────────
 function applyCosmetics(){
   const eq = getEquipped();
-  // Jersey color
   const jerItem = CATALOG.jerseys.find(j=>j.id===eq.jersey) || CATALOG.jerseys[0];
   player.color = jerItem.color;
-  // Ball skin
   const ballItem = CATALOG.balls.find(b=>b.id===eq.ball) || CATALOG.balls[0];
   activeBallColor = ballItem.ballColor;
-  // Active VFX flags
   activeVFX = eq.vfx || [];
 }
 
-// Global cosmetic state used during rendering
 let activeBallColor = '#e87722';
 let activeVFX = [];
 
-// ── TC REWARD ON GAME END ────────────────────────────────────────
 function calcTCReward(win, scoreDiff){
-  if(win){
-    const base = 50;
-    const bonus = Math.floor(scoreDiff * 8); // 8 TC per point margin
-    const total = base + bonus;
-    return total;
-  } else {
-    return Math.max(5, Math.floor(scoreDiff * 3)); // console losers still get some
-  }
+  const diffMult = 1 + (DIFF_TC_MULT[gameDifficulty]||0);
+  if(win){ return Math.round((50 + Math.floor(scoreDiff * 8)) * diffMult); }
+  else    { return Math.round(Math.max(5, Math.floor(scoreDiff * 3)) * diffMult); }
 }
 
-
 // ═══════════════════════════════════════════════════════════════
-// SUPABASE AUTH + DATA SYSTEM
+// SUPABASE AUTH
 // ═══════════════════════════════════════════════════════════════
 const SUPA_URL  = "https://qamulhtyvvsdihdjggex.supabase.co";
 const SUPA_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhbXVsaHR5dnZzZGloZGpnZ2V4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2ODY1NDQsImV4cCI6MjA4NzI2MjU0NH0.YgyIugV-ifQhn2x5cCk9mNWQisVLzFyCZnlvM_o9aAQ";
@@ -3019,149 +3084,73 @@ const supa = supabase.createClient(SUPA_URL, SUPA_ANON);
 let currentUser = null;
 let loginMode   = 'signin';
 
-// ── UI HELPERS ────────────────────────────────────────────────
-function setLoginError(msg, ok=false){
-  const el = document.getElementById('login-err');
-  el.style.color = ok ? '#00e676' : '#ff4444';
-  el.textContent = msg;
-}
-function setLoginLoading(on){
-  const btn = document.getElementById('login-btn');
-  btn.textContent = on ? (loginMode==='register'?'CREATING...':'SIGNING IN...') : (loginMode==='register'?'CREATE ACCOUNT':'SIGN IN');
-  btn.disabled = on;
-}
+function setLoginError(msg, ok=false){ const el=document.getElementById('login-err'); el.style.color=ok?'#00e676':'#ff4444'; el.textContent=msg; }
+function setLoginLoading(on){ const btn=document.getElementById('login-btn'); btn.textContent=on?(loginMode==='register'?'CREATING...':'SIGNING IN...'):(loginMode==='register'?'CREATE ACCOUNT':'SIGN IN'); btn.disabled=on; }
 
 function toggleLoginMode(){
-  loginMode = loginMode==='signin'?'register':'signin';
-  document.getElementById('login-title').textContent = loginMode==='register'?'CREATE ACCOUNT':'SIGN IN';
-  document.getElementById('login-btn').textContent   = loginMode==='register'?'CREATE ACCOUNT':'SIGN IN';
-  document.querySelector('.login-switch').innerHTML  = loginMode==='register'
-    ? 'Already have an account? <span onclick="toggleLoginMode()">SIGN IN</span>'
-    : 'No account? <span onclick="toggleLoginMode()">CREATE ONE</span>';
+  loginMode=loginMode==='signin'?'register':'signin';
+  document.getElementById('login-title').textContent=loginMode==='register'?'CREATE ACCOUNT':'SIGN IN';
+  document.getElementById('login-btn').textContent=loginMode==='register'?'CREATE ACCOUNT':'SIGN IN';
+  document.querySelector('.login-switch').innerHTML=loginMode==='register'?'Already have an account? <span onclick="toggleLoginMode()">SIGN IN</span>':'No account? <span onclick="toggleLoginMode()">CREATE ONE</span>';
   setLoginError('');
 }
 
-// ── SIGN UP / SIGN IN ────────────────────────────────────────
 async function doLogin(){
-  const email = document.getElementById('l-email').value.trim().toLowerCase();
-  const pass  = document.getElementById('l-pass').value;
-  if(!email || !pass){ setLoginError('FILL IN ALL FIELDS'); return; }
-  if(!/\S+@\S+\.\S+/.test(email)){ setLoginError('INVALID EMAIL'); return; }
-  if(loginMode==='register' && pass.length<6){ setLoginError('PASSWORD MIN 6 CHARS'); return; }
-
-  setLoginLoading(true);
-  setLoginError('');
-
+  const email=document.getElementById('l-email').value.trim().toLowerCase();
+  const pass=document.getElementById('l-pass').value;
+  if(!email||!pass){setLoginError('FILL IN ALL FIELDS');return;}
+  if(!/\S+@\S+\.\S+/.test(email)){setLoginError('INVALID EMAIL');return;}
+  if(loginMode==='register'&&pass.length<6){setLoginError('PASSWORD MIN 6 CHARS');return;}
+  setLoginLoading(true); setLoginError('');
   if(loginMode==='register'){
-    const { data, error } = await supa.auth.signUp({ email, password: pass });
-    if(error){ setLoginError(error.message.toUpperCase()); setLoginLoading(false); return; }
-    setLoginError('✅ CHECK YOUR EMAIL & CLICK THE LINK, THEN SIGN IN HERE', true);
+    const{data,error}=await supa.auth.signUp({email,password:pass});
+    if(error){setLoginError(error.message.toUpperCase());setLoginLoading(false);return;}
+    setLoginError('✅ CHECK YOUR EMAIL & CLICK THE LINK, THEN SIGN IN HERE',true);
     setLoginLoading(false);
-    // Auto-switch to sign in mode so they can log in after confirming
-    setTimeout(()=>{
-      loginMode = 'signin';
-      document.getElementById('login-title').textContent = 'SIGN IN';
-      document.getElementById('login-btn').textContent   = 'SIGN IN';
-      document.querySelector('.login-switch').innerHTML  = 'No account? <span onclick="toggleLoginMode()">CREATE ONE</span>';
-    }, 2000);
+    setTimeout(()=>{loginMode='signin';document.getElementById('login-title').textContent='SIGN IN';document.getElementById('login-btn').textContent='SIGN IN';document.querySelector('.login-switch').innerHTML='No account? <span onclick="toggleLoginMode()">CREATE ONE</span>';},2000);
   } else {
-    const { data, error } = await supa.auth.signInWithPassword({ email, password: pass });
-    if(error){ setLoginError(error.message.toUpperCase()); setLoginLoading(false); return; }
+    const{data,error}=await supa.auth.signInWithPassword({email,password:pass});
+    if(error){setLoginError(error.message.toUpperCase());setLoginLoading(false);return;}
     await onLogin(data.user);
   }
 }
 
 async function onLogin(user){
-  currentUser = user;
-  // Load or create player profile row
-  let { data: profile } = await supa.from('players').select('*').eq('id', user.id).single();
+  currentUser=user;
+  let{data:profile}=await supa.from('players').select('*').eq('id',user.id).single();
   if(!profile){
-    // First login — create row
-    const displayName = user.email.split('@')[0].toUpperCase().slice(0,12);
-    const { data: newProfile } = await supa.from('players').insert({
-      id: user.id,
-      email: user.email,
-      display_name: displayName,
-      tc: 0,
-      owned: ['jer_default','ball_default'],
-      equipped: {vfx:[],jersey:'jer_default',ball:'ball_default'},
-      stats: {speed:1,stamina:1,shooting:1,defense:1,dunking:1},
-      wins: 0, losses: 0,
-      player_name: 'PLAYER', player_num: '1'
-    }).select().single();
-    profile = newProfile;
+    const displayName=user.email.split('@')[0].toUpperCase().slice(0,12);
+    const{data:newProfile}=await supa.from('players').insert({id:user.id,email:user.email,display_name:displayName,tc:0,owned:['jer_default','ball_default'],equipped:{vfx:[],jersey:'jer_default',ball:'ball_default'},stats:{speed:1,stamina:1,shooting:1,defense:1,dunking:1},wins:0,losses:0,player_name:'PLAYER',player_num:'1'}).select().single();
+    profile=newProfile;
   }
-  // Push profile into localStorage — merge with any existing local data (keep higher values)
   if(profile){
-    try{
-      const localTC = parseInt(localStorage.getItem('jam_tc')||'0');
-      const cloudTC = profile.tc||0;
-      const mergedTC = Math.max(localTC, cloudTC);
-      // If local has more TC (from playing as guest), save that back up
-      if(localTC > cloudTC){
-        await supa.from('players').update({tc: mergedTC}).eq('id', user.id);
-      }
-      localStorage.setItem('jam_tc', String(mergedTC));
-    }catch(e){}
-    try{
-      // Merge owned items — union of local + cloud
-      const localOwned = JSON.parse(localStorage.getItem('jam_owned')||'["jer_default","ball_default"]');
-      const cloudOwned = profile.owned||['jer_default','ball_default'];
-      const mergedOwned = [...new Set([...localOwned, ...cloudOwned])];
-      if(mergedOwned.length > cloudOwned.length){
-        await supa.from('players').update({owned: mergedOwned}).eq('id', user.id);
-      }
-      localStorage.setItem('jam_owned', JSON.stringify(mergedOwned));
-    }catch(e){}
-    try{ localStorage.setItem('jam_equipped', JSON.stringify(profile.equipped||{vfx:[],jersey:'jer_default',ball:'ball_default'})); }catch(e){}
-    try{
-      // Merge stats — take max level per stat
-      const localStats = JSON.parse(localStorage.getItem('jam_stats')||'{}');
-      const cloudStats = profile.stats||{speed:1,stamina:1,shooting:1,defense:1,dunking:1};
-      const mergedStats = {};
-      ['speed','stamina','shooting','defense','dunking'].forEach(k=>{
-        mergedStats[k] = Math.max(localStats[k]||1, cloudStats[k]||1);
-      });
-      localStorage.setItem('jam_stats', JSON.stringify(mergedStats));
-    }catch(e){}
-    try{
-      // Wins/losses — take higher values
-      const localW = parseInt(localStorage.getItem('jam_w')||'0');
-      const localL = parseInt(localStorage.getItem('jam_l')||'0');
-      localStorage.setItem('jam_w', String(Math.max(localW, profile.wins||0)));
-      localStorage.setItem('jam_l', String(Math.max(localL, profile.losses||0)));
-    }catch(e){}
-    try{ localStorage.setItem('jam_name', profile.player_name||'PLAYER'); }catch(e){}
-    try{ localStorage.setItem('jam_num',  profile.player_num||'1'); }catch(e){}
+    try{const localTC=parseInt(localStorage.getItem('jam_tc')||'0'),cloudTC=profile.tc||0,mergedTC=Math.max(localTC,cloudTC);if(localTC>cloudTC)await supa.from('players').update({tc:mergedTC}).eq('id',user.id);localStorage.setItem('jam_tc',String(mergedTC));}catch(e){}
+    try{const localOwned=JSON.parse(localStorage.getItem('jam_owned')||'["jer_default","ball_default"]'),cloudOwned=profile.owned||['jer_default','ball_default'],mergedOwned=[...new Set([...localOwned,...cloudOwned])];if(mergedOwned.length>cloudOwned.length)await supa.from('players').update({owned:mergedOwned}).eq('id',user.id);localStorage.setItem('jam_owned',JSON.stringify(mergedOwned));}catch(e){}
+    try{localStorage.setItem('jam_equipped',JSON.stringify(profile.equipped||{vfx:[],jersey:'jer_default',ball:'ball_default'}));}catch(e){}
+    try{const localStats=JSON.parse(localStorage.getItem('jam_stats')||'{}'),cloudStats=profile.stats||{speed:1,stamina:1,shooting:1,defense:1,dunking:1},mergedStats={};['speed','stamina','shooting','defense','dunking'].forEach(k=>{mergedStats[k]=Math.max(localStats[k]||1,cloudStats[k]||1);});localStorage.setItem('jam_stats',JSON.stringify(mergedStats));}catch(e){}
+    try{const localW=parseInt(localStorage.getItem('jam_w')||'0'),localL=parseInt(localStorage.getItem('jam_l')||'0');localStorage.setItem('jam_w',String(Math.max(localW,profile.wins||0)));localStorage.setItem('jam_l',String(Math.max(localL,profile.losses||0)));}catch(e){}
+    try{localStorage.setItem('jam_name',profile.player_name||'PLAYER');}catch(e){}
+    try{localStorage.setItem('jam_num',profile.player_num||'1');}catch(e){}
   }
-  // Update UI
   document.getElementById('account-bar').style.display='flex';
-  document.getElementById('account-name').textContent = profile?.display_name || user.email.split('@')[0].toUpperCase();
+  document.getElementById('account-name').textContent=profile?.display_name||user.email.split('@')[0].toUpperCase();
   document.getElementById('login-overlay').style.display='none';
   document.getElementById('menu').style.display='flex';
-  loadProfile();
-  loadPlayerStats();
-  refreshTCDisplay();
-  applyCosmetics();
-  switchTab('play');
+  loadProfile(); loadPlayerStats(); loadDifficulty(); refreshTCDisplay(); applyCosmetics(); switchTab('play');
 }
 
 async function guestLogin(){
-  currentUser = null;
+  currentUser=null;
   document.getElementById('login-overlay').style.display='none';
   document.getElementById('account-bar').style.display='none';
   document.getElementById('menu').style.display='flex';
-  loadProfile();
-  loadPlayerStats();
-  refreshTCDisplay();
-  applyCosmetics();
-  switchTab('play');
+  loadProfile(); loadPlayerStats(); loadDifficulty(); refreshTCDisplay(); applyCosmetics(); switchTab('play');
 }
 
 async function doLogout(){
   await saveUserData();
   await supa.auth.signOut();
-  currentUser = null;
+  currentUser=null;
   document.getElementById('account-bar').style.display='none';
   document.getElementById('menu').style.display='none';
   document.getElementById('login-overlay').style.display='flex';
@@ -3173,81 +3162,72 @@ async function doLogout(){
   document.getElementById('login-btn').textContent='SIGN IN';
 }
 
-// ── SAVE TO SUPABASE ─────────────────────────────────────────
 async function saveUserData(){
   if(!currentUser) return;
-  await supa.from('players').upsert({
-    id: currentUser.id,
-    tc:        getTC(),
-    owned:     getOwned(),
-    equipped:  getEquipped(),
-    stats:     getPlayerStats(),
-    wins:      getRecord().w,
-    losses:    getRecord().l,
-    player_name: playerName||'PLAYER',
-    player_num:  playerNum||'1',
-  });
+  await supa.from('players').upsert({id:currentUser.id,tc:getTC(),owned:getOwned(),equipped:getEquipped(),stats:getPlayerStats(),wins:getRecord().w,losses:getRecord().l,player_name:playerName||'PLAYER',player_num:playerNum||'1'});
 }
 
-// Check if already logged in on page load
 async function checkExistingSession(){
-  const { data: { session } } = await supa.auth.getSession();
-  if(session?.user){
-    await onLogin(session.user);
-  }
-  // else login screen stays visible
+  const{data:{session}}=await supa.auth.getSession();
+  if(session?.user){ await onLogin(session.user); }
 }
 
-// ═══════════════════════════════════════════════════════════════
-// STAT UPGRADE SYSTEM
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// STAT UPGRADES
+// ═══════════════════════════════════════════
 const STAT_DEFS = [
-  { id:'speed',    name:'SPEED',    icon:'💨', desc:'Move & sprint faster',           color:'#44aaff', maxLvl:10,
-    costFn: lvl=>Math.floor(60+lvl*45),
-    effect: lvl=>{ playerStats.speed=lvl; } },
-  { id:'stamina',  name:'STAMINA',  icon:'🔋', desc:'Sprint longer before gassing',  color:'#00e676', maxLvl:10,
-    costFn: lvl=>Math.floor(50+lvl*35),
-    effect: lvl=>{ playerStats.stamina=lvl; } },
-  { id:'shooting', name:'SHOOTING', icon:'🎯', desc:'Bigger green window on shots',  color:'#ffcc00', maxLvl:10,
-    costFn: lvl=>Math.floor(80+lvl*55),
-    effect: lvl=>{ playerStats.shooting=lvl; } },
-  { id:'defense',  name:'DEFENSE',  icon:'🛡️', desc:'Faster steal & bigger contest', color:'#ff6644', maxLvl:10,
-    costFn: lvl=>Math.floor(70+lvl*50),
-    effect: lvl=>{ playerStats.defense=lvl; } },
-  { id:'dunking',  name:'DUNKING',  icon:'🏀', desc:'Wider dunk range & success',    color:'#cc44ff', maxLvl:10,
-    costFn: lvl=>Math.floor(90+lvl*60),
-    effect: lvl=>{ playerStats.dunking=lvl; } },
+  { id:'speed',    name:'SPEED',    icon:'💨', desc:'Move & sprint faster',           color:'#44aaff', maxLvl:10, costFn:lvl=>Math.floor(60+lvl*45) },
+  { id:'stamina',  name:'STAMINA',  icon:'🔋', desc:'Sprint longer before gassing',  color:'#00e676', maxLvl:10, costFn:lvl=>Math.floor(50+lvl*35) },
+  { id:'shooting', name:'SHOOTING', icon:'🎯', desc:'Bigger green window on shots',  color:'#ffcc00', maxLvl:10, costFn:lvl=>Math.floor(80+lvl*55) },
+  { id:'defense',  name:'DEFENSE',  icon:'🛡️', desc:'Faster steal & bigger contest', color:'#ff6644', maxLvl:10, costFn:lvl=>Math.floor(70+lvl*50) },
+  { id:'dunking',  name:'DUNKING',  icon:'🏀', desc:'Wider dunk range & success',    color:'#cc44ff', maxLvl:10, costFn:lvl=>Math.floor(90+lvl*60) },
 ];
 
-// playerStats holds current live levels
 let playerStats = { speed:1, stamina:1, shooting:1, defense:1, dunking:1 };
+// difficulty: 'easy'|'normal'|'hard'|'very_hard'
+// tcMult applied to CPU shot success chances
+let gameDifficulty = 'normal';
+const DIFF_TC_MULT = { easy:-0.15, normal:0, hard:0.15, very_hard:0.40 };
+function getCPUDiffMult(){ return 1 + (DIFF_TC_MULT[gameDifficulty]||0); }
 
 function getPlayerStats(){ try{ return JSON.parse(localStorage.getItem('jam_stats')||'{"speed":1,"stamina":1,"shooting":1,"defense":1,"dunking":1}'); }catch(e){ return {speed:1,stamina:1,shooting:1,defense:1,dunking:1}; } }
 function setPlayerStats(s){ try{ localStorage.setItem('jam_stats',JSON.stringify(s)); }catch(e){} }
 
-function loadPlayerStats(){
-  playerStats = getPlayerStats();
-  applyStatEffects();
+function loadPlayerStats(){ playerStats=getPlayerStats(); }
+
+// ── STAT SCALING ─────────────────────────────────────────────────────────────
+// Level 1  = heavy debuff.  Each level above 1 gives meaningful improvement.
+// Formula: value = base + (lvl-1)/(maxLvl-1) * (top - base)
+// Speed: lvl1 = 0.85×, lvl10 = 1.28×  (never drops below CPU baseline)
+function getSpeedMult(){
+  const lvl=playerStats.speed||1, maxLvl=10;
+  return 0.85 + (lvl-1)/(maxLvl-1)*0.43;
 }
-
-// Stat multipliers used during gameplay
-function getSpeedMult(){    return 1 + (playerStats.speed-1)*0.065;   } // +6.5% per level, max +58.5%
-function getStaminaMult(){  return 1 + (playerStats.stamina-1)*0.08;  } // more regen, less drain
-function getShootBonus(){   return (playerStats.shooting-1)*0.008;    } // extra green window fraction
-function getDefenseBonus(){ return (playerStats.defense-1)*0.06;      } // steal range + contest
-function getDunkBonus(){    return (playerStats.dunking-1)*6;          } // extra dunk range pixels
-
-function applyStatEffects(){
-  // These are read in gameplay code via the getter functions above
-  // So no direct mutation needed — just keep playerStats in sync
+// Stamina: lvl1 = 0.60×, lvl10 = 1.35×
+function getStaminaMult(){
+  const lvl=playerStats.stamina||1, maxLvl=10;
+  return 0.60 + (lvl-1)/(maxLvl-1)*0.75;
+}
+// Shooting: additive green-zone bonus. lvl1 = -0.055 (shrinks zone!), lvl10 = +0.045
+function getShootBonus(){
+  const lvl=playerStats.shooting||1, maxLvl=10;
+  return -0.055 + (lvl-1)/(maxLvl-1)*0.10;
+}
+// Defense: lvl1 = 0 bonus, lvl10 = big bonus (reach/steal/block)
+function getDefenseBonus(){
+  const lvl=playerStats.defense||1, maxLvl=10;
+  return (lvl-1)/(maxLvl-1)*0.55;   // 0 → 0.55
+}
+// Dunk: lvl1 = -40 (must be basically under basket), lvl10 = +55
+function getDunkBonus(){
+  const lvl=playerStats.dunking||1, maxLvl=10;
+  return -40 + (lvl-1)/(maxLvl-1)*95;
 }
 
 function renderStats(){
   const grid = document.getElementById('stat-grid');
   if(!grid) return;
-  const tc = getTC();
-  const stats = getPlayerStats();
-
+  const tc = getTC(), stats = getPlayerStats();
   grid.innerHTML = '';
   STAT_DEFS.forEach(def=>{
     const lvl = stats[def.id]||1;
@@ -3255,56 +3235,53 @@ function renderStats(){
     const pct = (lvl/def.maxLvl)*100;
     const card = document.createElement('div');
     card.className = 'stat-card';
-    card.innerHTML = `
-      <div class="stat-card-name">${def.icon} ${def.name}</div>
+    card.innerHTML = `<div class="stat-card-name">${def.icon} ${def.name}</div>
       <div class="stat-row">
-        <div class="stat-label">
-          <span>${def.desc}</span>
-          <span>LVL ${lvl} / ${def.maxLvl}</span>
-        </div>
-        <div class="stat-bar-bg">
-          <div class="stat-bar-fill" style="width:${pct}%;background:${def.color};box-shadow:0 0 8px ${def.color}55;"></div>
-        </div>
+        <div class="stat-label"><span>${def.desc}</span><span>LVL ${lvl} / ${def.maxLvl}</span></div>
+        <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${pct}%;background:${def.color};box-shadow:0 0 8px ${def.color}55;"></div></div>
         <div class="stat-upgrade-row">
-          ${nextCost!==null
-            ? `<button class="stat-up-btn" onclick="upgradeStat('${def.id}')" ${tc<nextCost?'disabled':''}>UPGRADE</button>
-               <span class="stat-up-cost">⚡ ${nextCost} TC</span>`
-            : `<span class="stat-up-btn" style="cursor:default;opacity:.5">MAX LEVEL</span>`
-          }
+          ${nextCost!==null?`<button class="stat-up-btn" onclick="upgradeStat('${def.id}')" ${tc<nextCost?'disabled':''}>UPGRADE</button><span class="stat-up-cost">⚡ ${nextCost} TC</span>`:`<span class="stat-up-btn" style="cursor:default;opacity:.5">MAX LEVEL</span>`}
           <span class="stat-lvl" style="margin-left:auto">${Array(lvl).fill('▮').join('')}${Array(def.maxLvl-lvl).fill('▯').join('')}</span>
         </div>
-      </div>
-    `;
+      </div>`;
     grid.appendChild(card);
   });
 }
 
 function upgradeStat(id){
-  const stats = getPlayerStats();
-  const def   = STAT_DEFS.find(d=>d.id===id);
+  const stats=getPlayerStats(), def=STAT_DEFS.find(d=>d.id===id);
   if(!def) return;
-  const lvl   = stats[id]||1;
+  const lvl=stats[id]||1;
   if(lvl>=def.maxLvl) return;
-  const cost  = def.costFn(lvl);
-  const tc    = getTC();
+  const cost=def.costFn(lvl), tc=getTC();
   if(tc<cost) return;
-  setTC(tc-cost);
-  stats[id] = lvl+1;
-  setPlayerStats(stats);
-  playerStats = stats;
-  refreshTCDisplay();
-  renderStats();
+  setTC(tc-cost); stats[id]=lvl+1; setPlayerStats(stats); playerStats=stats;
+  refreshTCDisplay(); renderStats();
   flash(`${def.name} UPGRADED TO LVL ${lvl+1}! 📈`);
-  saveUserData(); // async save to Supabase
+  saveUserData();
 }
 
-// ── PAGE LOAD: hide menu, check Supabase session ──────────────
+// ── INIT ──────────────────────────────────
 document.getElementById('menu').style.display='none';
 checkExistingSession();
 
 const CPU_NAMES=['GHOST','SNAKE','DEMON','REAPER','BEAST','HAWK','FLASH','ACE'];
 const CPU_NUMS=['5','23','3','11','7','00','21','32'];
 function pickCPU(){ const i=Math.floor(Math.random()*CPU_NAMES.length);cpuName=CPU_NAMES[i];cpuNum=CPU_NUMS[i]; }
+
+function setDifficulty(d){
+  gameDifficulty = d;
+  try{ localStorage.setItem('jam_difficulty', d); }catch(e){}
+  document.querySelectorAll('.diff-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.diff === d);
+  });
+}
+function loadDifficulty(){
+  try{
+    const saved = localStorage.getItem('jam_difficulty');
+    if(saved) setDifficulty(saved);
+  }catch(e){}
+}
 
 function launchGame(){
   if(AC.state==='suspended') AC.resume();
@@ -3336,7 +3313,7 @@ function startGame(){
   p1Steals=0;p2Steals=0;p1Blocks=0;p2Blocks=0;p1Rebounds=0;p2Rebounds=0;
   winnersTeam=1;
 
-  player.x=250;player.y=H/2;player.hasBall=true;
+  player.x=250;player.y=H/2;player.hasBall=false;
   player.jumpOff=0;player.jumpVel=0;player.jumping=false;
   player.walkT=0;player.dribbleT=0;player.blockAnim=0;player.stealAnim=0;player.stealCD=0;
   player.defending=false;player.dunking=false;player.dunkT=0;player.dunkPhase=0;
@@ -3351,7 +3328,8 @@ function startGame(){
   cpu.vx=0;cpu.vy=0;cpu.shootTimer=2.5;cpu.aiCooldown=0;cpu.stamina=100;cpu.blockCD=0;cpu.anklebroken=0;
   cpuCreepAngle=0;
 
-  ball.x=player.x+14;ball.y=player.y+2;ball.vx=0;ball.vy=0;
+  // Ball starts at center for jump ball
+  ball.x=W/2;ball.y=H/2;ball.vx=0;ball.vy=0;
   ball.inFlight=false;ball.loose=false;ball.trail=[];ball.spinAngle=0;
 
   checkupActive=false;checkupBallHolder=0;checkupAccepted=false;checkupTimer=0;
@@ -3369,9 +3347,15 @@ function startGame(){
   applyCosmetics();
   loadPlayerStats();
   initFans();
-  startBGMusic();
-  gameRunning=true;lastTS=performance.now();
-  requestAnimationFrame(t=>{lastTS=t;requestAnimationFrame(gameLoop);});
+
+  gameRunning=false; // game doesn't start until jump ball done
+  jumpBallActive=false;
+  jbCPUJumpTarget=null;
+
+  // Start jump ball sequence
+  lastTS = performance.now();
+  startJumpBall();
+  requestAnimationFrame(jumpBallLoop);
 }
 
 function endGame(){
